@@ -1,1 +1,15 @@
-# wikipedia-political-context
+# Anonymity and Free Speech: How Political Context Shapes Wikipedia Editors
+### Group Members
+Emma Kochenderfer  
+Kal Fernande  
+Dylan Boswell  
+! ADD LINK TO LITERATURE REVIEW FILE
+## Abstract
+Wikipedia aims to be a public encyclopedia, a place where people can share knowledge for the greater good. While its intentions- and those of most contributors– are noble, a few bad actors can move such a resource from being a public square– one where the sharing of information is done respectfully for the pursuit of the truth– to a tool to spread propaganda, misinformation and defamation for their own personal gain. Due to this problem, Wikipedia has incorporated an identification system, to track edits and comments on their wikipedia pages by a user’s IP address. This allows Wikipedia to at times restrict IP address editing access, if it is determined that a user is repeatedly vandalising the encyclopedia. While this system has successfully reduced the amount of spam and misinformation on the platform, it does bring up a series of other questions regarding user privacy, ease of contribution and user trust and has exposed a number of propagandised edits. We will research the link between Wiki and a user’s IP address for its impact on users who want to be critical of their government. Additionally, we’ll investigate the process of becoming a Wikipedia Administrator, how easy the role is to abuse, and what information administrators are privy to. Depending on that information, we’ll further research the meaning of this for a Wikipedia user who lives in a more repressive regime, and their trust in the wikipedia platform to preserve their anonymity. In asking these questions, we will determine the cost benefit analysis of anonymity versus spam protection to have the best outcomes for productive, constructive debate and discussion. We will then map the countries Wikipedia contributors come from and their respective laws protecting free speech and understand whether more draconian free speech laws are correlated with a decrease in wikipedia contributions and the impact of the IP address requirements.
+## Research Questions
+* How difficult is it to become a Wikipedia moderator?
+* What different levels of power and information are moderators capable of having, and how difficult/easy are they able to abuse?
+* What do these different roles and levels of information mean for Wikipedia users who live in more repressive regimes, and how is their anonymity protected?
+* In terms of IP address restriction to avoid misuse of editing Wikipedia articles, how is it ensured that there is still space for free speech and constructive criticism and debate? How is this impacted by the regions that moderators are primarily from, and their internal biases?
+* Where do the majority of Wikipedia contributors and moderators come from? What are the free speech laws like in those locations? How does the Wikipedia access of IP address for editors impact people in regions with less protected free speech?
+## Methodology
