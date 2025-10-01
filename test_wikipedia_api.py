@@ -7,7 +7,7 @@ params = {
     "action": "query",
     "list": "recentchanges",
     "rcprop": "title|user|timestamp|comment|flags",
-    "rclimit": 5,
+    "rclimit": 250,
     "format": "json"
 }
 
@@ -16,16 +16,15 @@ headers = {"User-Agent": "WikipediaEditTracker/1.0 dboswell@chapman.edu"}
 response = requests.get(url, params=params, headers=headers)
 data = response.json()
 
-for change in data["query"]["recentchanges"]:
-    print(change)
-
-
-
 # Load the database
 reader = geoip2.database.Reader("GeoLite2-Country.mmdb")
 
-# Example: look up Google DNS
-
-print(ip, "→", response.country.name)  # Should print "United States"
+for change in data["query"]["recentchanges"]:
+    if change["user"][0].isdigit():
+        ip = change["user"]
+        response = reader.country(ip)
+        print(ip, "→", response.country.name)  # Should print "United States"
 
 reader.close()
+
+
