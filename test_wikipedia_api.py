@@ -18,3 +18,14 @@ data = response.json()
 
 for change in data["query"]["recentchanges"]:
     print(change)
+
+
+
+# Load the database
+reader = geoip2.database.Reader("GeoLite2-Country.mmdb")
+
+# Example: look up Google DNS
+
+print(ip, "→", response.country.name)  # Should print "United States"
+
+reader.close()
