@@ -1,6 +1,5 @@
 import requests
 import geoip2.database
-import ipaddress
 import csv
 from datetime import datetime
 
