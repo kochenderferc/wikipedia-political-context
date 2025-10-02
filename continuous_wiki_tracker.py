@@ -23,6 +23,11 @@ params = {
     "format": "json"
 }
 
+def make_text_red(text):
+    return f"\033[91m{text}\033[0m"
+
+def make_text_green(text):
+    return f"\033[92m{text}\033[0m"
 
 while True:
     try:
@@ -47,15 +52,17 @@ while True:
                 response = reader.country(ip) # Getting country from geoip2 database
                 country = response.country.name
                 # Writing to csv
-                with open("user_ip_data.csv",'a',newline="") as csvFile:
+                with open("user_ip_data_continuous.csv",'a',newline="") as csvFile:
                     writer = csv.writer(csvFile)
                     writer.writerow([ip,country,current_timestamp])
-                print(f"Valid IP ------- {ip} : {country}\n")
+                print(make_text_green(f"Valid IP ------- {ip} : {country}\n"))
             except:
-                print(f"Invalid IP --- {ip}\n")
+                print(make_text_red(f"Invalid IP ------- {ip}\n"))
     except KeyboardInterrupt:
         print("Program Exited...")
         break
+
+
 
 
 csvFile.close()
