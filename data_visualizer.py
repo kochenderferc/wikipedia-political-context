@@ -2,23 +2,28 @@ import matplotlib.pyplot as plt
 import csv
 
 def read_csv(csv_file):
-    country_edit_dict = {}
-    total_edit_count = 0
-    country_edit_dict_size = 0
-    # Reading from the csv and creating a dictionary with their values
-    with open(csv_file,'r') as csvFile:
-        reader = csv.reader(csvFile,delimiter=",")
-        for edit in reader:
-            total_edit_count += 1
-            country = edit[1]
-            if country in country_edit_dict:
-                country_edit_dict[country] = country_edit_dict[country] + 1
-                country_edit_dict_size += 1
-            else:
-                country_edit_dict[country] = 1
-                country_edit_dict_size += 1
+    try:
+        country_edit_dict = {}
+        total_edit_count = 0
+        country_edit_dict_size = 0
+        # Reading from the csv and creating a dictionary with their values
+        with open(csv_file,'r') as csvFile:
+            reader = csv.reader(csvFile,delimiter=",")
+            for edit in reader:
+                total_edit_count += 1
+                country = edit[1]
+                if country in country_edit_dict:
+                    country_edit_dict[country] = country_edit_dict[country] + 1
+                    country_edit_dict_size += 1
+                else:
+                    country_edit_dict[country] = 1
+                    country_edit_dict_size += 1
 
-    return (country_edit_dict, total_edit_count, country_edit_dict_size)    
+        return (country_edit_dict, total_edit_count, country_edit_dict_size)    
+    except:
+        print("\n\tERROR READING FROM CSV FILE: '",csv_file,"'\n\n")
+        exit()
+        return None
 
 def print_country_edit_counts(csv_data):
     country_edit_count_dict = csv_data[0]
@@ -55,20 +60,21 @@ def plot_data(csv_data):
     plt.show()
 
 
-def get_csv_dates():
-    dates = []
-    with open('user_ip_data_continuous.csv','r') as csvFile:
-        try:
-            reader = csv.reader(csvFile,delimiter=',')
-            
-            for row in reader:
-                date = row[2].split()[0]
-                dates.append(date)
-        except:
-            print("Couldn't Get Date")
-
-    csvFile.close()
-    return dates
+def get_csv_dates(csv_data):
+    try:
+        dates = []
+        with open(csv_data,'r') as csvFile:
+                reader = csv.reader(csvFile,delimiter=',')
+                
+                for row in reader:
+                    date = row[2].split()[0]
+                    dates.append(date)
+        csvFile.close()
+        return dates
+    except:
+        print("\n\tERROR READING FROM CSV FILE: '",csv_file,"'\n\n")
+        exit()
+        return None
 
 
 if __name__ == "__main__":
