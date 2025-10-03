@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import csv
+import sys
 
 def read_csv(csv_file):
     try:
@@ -24,6 +25,7 @@ def read_csv(csv_file):
         print("\n\tERROR READING FROM CSV FILE: '",csv_file,"'\n\n")
         exit()
         return None
+
 
 def print_country_edit_counts(csv_data):
     country_edit_count_dict = csv_data[0]
@@ -78,6 +80,19 @@ def get_csv_dates(csv_data):
 
 
 if __name__ == "__main__":
-    csv_data = read_csv('user_ip_data_continuous.csv')
-    print_country_edit_counts(csv_data)
-    plot_data(csv_data)
+    if len(sys.argv) < 2: # If there is no csv file provided as a command line argument
+        csv_data = read_csv('user_ip_data_continuous.csv')
+        print_country_edit_counts(csv_data)
+        plot_data(csv_data)
+    elif len(sys.argv) == 2:
+        csv_data = read_csv(sys.argv[1])
+        print(csv_data)
+        print_country_edit_counts(csv_data)
+        plot_data(csv_data)
+    else:
+        print("Incorrect Arguments Provided:",end="")
+        for i in range(len(sys.argv)):
+            print(sys.argv[i] + " ")
+        print()
+    
+
