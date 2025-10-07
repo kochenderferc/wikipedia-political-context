@@ -21,7 +21,7 @@ def make_csv(url,parameters,headers):
             data = response.json()
 
             # Loading the database
-            reader = geoip2.database.Reader("GeoLite2-Country.mmdb")
+            reader = geoip2.database.Reader("../GeoLite2-Country.mmdb")
 
             # Converting timestamp of recent edit into comparable value
             current_timestamp = data["query"]["recentchanges"][0]["timestamp"]
@@ -34,19 +34,19 @@ def make_csv(url,parameters,headers):
                 previous_timestamp = current_timestamp
 
                 try:
-                    ip = ip = data["query"]["recentchanges"][0]["user"] # Getting IP
-
+                    ip = data["query"]["recentchanges"][0]["user"] # Getting IP
                     # Getting country from geoip2 database based on IP
                     response = reader.country(ip)
                     country = response.country.name
 
                     # Adding IP, Country, and Timestamp to csv
-                    with open("user_ip_data_continuous.csv",'a',newline="") as csvFile:
+                    with open("../CSVs/data_streaming.csv",'a',newline="") as csvFile:
                         writer = csv.writer(csvFile)
                         writer.writerow([ip,country,current_timestamp])
 
                     # Green console output
                     print(make_text_green(f"Unregistered Account ------- {ip} : {country}\n"))
+                
                 except KeyboardInterrupt:
                     print("Program terminating..")
                     break

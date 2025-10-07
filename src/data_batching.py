@@ -22,7 +22,7 @@ response = requests.get(url, params=params, headers=headers)
 data = response.json()
 
 # Loading the database
-reader = geoip2.database.Reader("GeoLite2-Country.mmdb")
+reader = geoip2.database.Reader("../GeoLite2-Country.mmdb")
 
 # Dictionary to hold IP and Country
 ip_country = {}
@@ -38,7 +38,7 @@ for change in data["query"]["recentchanges"]:
         print("Registered Account") # In case we encounter an invalid IP/Username
 
 # Writing values to csv
-with open("user_ip_data.csv",'w',newline="") as csvFile:
+with open("../CSVs/data_batching.csv",'w',newline="") as csvFile:
     writer = csv.writer(csvFile)
     for key, value in ip_country.items():
         writer.writerow([key,value])
