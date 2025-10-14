@@ -15,9 +15,17 @@ Wikipedia aims to be a public encyclopedia, a place where people can share knowl
 ## Methodology
 We will examine Wikipedia policies for IP address tracking, administrator access and powers, and compare these with international/standards for free speech and data protection. We will look at previous cases of Wikipedia IP address blockings, such as the case where all users in Qatar were blocked from editing Wikipedia on accident in 2007. We will also look at countries where Wikipedia access is restricted or blocked by the government, such as in Myanmar and China. Using the Wikipedia API, we can track edits from different countries/regions of the world, anonymity vs. registered user edits, and administrator usage/number of admins for each region. We can use this information to check how the demographics for admins (country/free speech rights/political state) may impact their practices and usages of admin powers, and how countries with less protections on free speech has an impact on rates of edits/admins.
 ## Research Question Week 7
-Explain a methodology involving the Wikipedia API of how to answer the question. (A small number of bullet points should be sufficient.)
+*INSTRUCTIONS DELETE THIS ONCE DONE! Explain a methodology involving the Wikipedia API of how to answer the question. (A small number of bullet points should be sufficient.)
 Implement a Python script `week7.py` that helps answering the question.
 Add instructions to the Readme that explain how to run the program. (A reader must be able to reproduce your results.)
 Describe the results you obtain with the help of the program.
-Explain how you are going to use the results of the program to answer your question.
+Explain how you are going to use the results of the program to answer your question.*
+#### Methodology
+* Use the Wikipedia API to access the IP addresses of unregistered editors, then link those IP addresses to their respective countries.
+* Run program for some period of time, then map frequency of edits per country.
+* Compare frequency of edits for each country against benchmarks for national free speech.
+#### Running the program
+#### Results
+With the help of the program, we can see a list of countries associated with edits made by unregistered users to English Wikipedia, then use that with our benchmark comparisons to see if there are patterns with edit frequency and how restrictive a government is with free speech. 
+
 
