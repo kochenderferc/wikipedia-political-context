@@ -84,7 +84,7 @@ def get_csv_dates(csv_data):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2: # If there is no csv file provided as a command line argument
-        csv_data = read_csv('user_ip_data_continuous.csv')
+        csv_data = read_csv('CSVs/data_streaming.csv')
         print_country_edit_counts(csv_data)
         plot_data(csv_data)
     elif len(sys.argv) == 2:
