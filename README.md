@@ -26,12 +26,6 @@ We will examine Wikipedia policies for IP address tracking, administrator access
 
 ## Research Question Week 7
 
-_INSTRUCTIONS DELETE THIS ONCE DONE! Explain a methodology involving the Wikipedia API of how to answer the question. (A small number of bullet points should be sufficient.)
-Implement a Python script `week7.py` that helps answering the question.
-Add instructions to the Readme that explain how to run the program. (A reader must be able to reproduce your results.)
-Describe the results you obtain with the help of the program.
-Explain how you are going to use the results of the program to answer your question._
-
 #### Methodology
 
 - Use the Wikipedia API to access the IP addresses of unregistered editors, then link those IP addresses to their respective countries.
