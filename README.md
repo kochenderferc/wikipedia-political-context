@@ -47,11 +47,11 @@ Explain how you are going to use the results of the program to answer your quest
 ### 1. 🚀 Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY-NAME.git
+git clone https://github.com/YOUR-USERNAME/wikipedia-political-context.git
 cd YOUR-REPOSITORY-NAME
 ```
 
-> Replace `YOUR-USERNAME` and `YOUR-REPOSITORY-NAME` with your GitHub username and this repo’s name.
+> Replace `YOUR-USERNAME` with your GitHub username.
 
 ---
 
