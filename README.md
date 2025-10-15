@@ -48,7 +48,7 @@ Explain how you are going to use the results of the program to answer your quest
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/wikipedia-political-context.git
-cd YOUR-REPOSITORY-NAME
+cd wikipedia-political-context
 ```
 
 > Replace `YOUR-USERNAME` with your GitHub username.
