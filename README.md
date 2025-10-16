@@ -36,9 +36,9 @@ We will examine Wikipedia policies for IP address tracking, administrator access
 
 ---
 
-## ✅ How to Set Up and Run This Project
+## How to Set Up and Run This Project
 
-### 1. 🚀 Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/wikipedia-political-context.git
@@ -49,7 +49,7 @@ cd wikipedia-political-context
 
 ---
 
-### 2. 🐍 Create and Activate a Virtual Environment
+### 2. Create and Activate a Virtual Environment
 
 #### macOS/Linux
 
@@ -67,7 +67,7 @@ venv\Scripts\activate
 
 ---
 
-### 3. 📦 Install Project Dependencies
+### 3. Install Project Dependencies
 
 With the virtual environment activated:
 
@@ -77,17 +77,26 @@ pip install -r requirements.txt
 
 ---
 
-### 4. ▶️ Run the Program
-
-To start the full pipeline (stream → save → visualize):
+### 4. Run the Program
 
 ```bash
-python week7.py
+cd src/
 ```
 
-- This will run `data_streaming.py` for 10 seconds to collect edit data.
-- It then automatically stops the script.
-- Finally, it runs `data_visualizer.py` to display the data.
+The full pipeline (web_scraper → data_visualizer → graphs!):
+
+```bash
+python3 web_scraper.py
+```
+
+- This will run `web_scraper.py` for until the user presses CTRL+C, SIGINT. I'd run it for about 1:30 minutes.
+- Press Ctrl + C after 1:30 minutes of scraping.
+
+```bash
+python3 data_visualizer.py
+```
+
+- A console interface should display with options to choose.
 
 #### Results
 
