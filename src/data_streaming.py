@@ -2,6 +2,7 @@ import requests
 import geoip2.database
 import csv
 from datetime import datetime
+import sys
 
 def make_text_red(text):
     return f"\033[91m{text}\033[0m"
@@ -40,19 +41,19 @@ def make_csv(url,parameters,headers):
                     country = response.country.name
 
                     # Adding IP, Country, and Timestamp to csv
-                    with open("CSVs/data_streaming.csv",'a',newline="") as csvFile:
+                    with open(f"CSVs/{lang_select}-data_streaming.csv",'a',newline="") as csvFile:
                         writer = csv.writer(csvFile)
                         writer.writerow([ip,country,current_timestamp])
 
                     # Green console output
-                    print(make_text_green(f"Unregistered Account ------- {ip} : {country}\n"))
+                    print(make_text_green(f"Unregistered Account ------- {ip} : {country} : {lang_select}\n"))
                 
                 except KeyboardInterrupt:
-                    print("Program terminating..")
+                    print("Program Terminating..\n")
                     break
                 except:
                     # Red console output
-                    print(make_text_red(f"Registered Account ------- {ip}\n"))
+                    print(make_text_red(f"Registered Account ------- {ip} : {lang_select}\n"))
         # For SIGINT/Ctrl + C
         except KeyboardInterrupt:
             print("Program Exited...")
@@ -63,18 +64,35 @@ def make_csv(url,parameters,headers):
             print("Program Stalling")
         
 if __name__ == "__main__":
-    url = "https://en.wikipedia.org/w/api.php"
+    if len(sys.argv) == 2: 
+        print("Language Selected",sys.argv[1])
 
-    # Header to simulate user access
-    headers = {"User-Agent": "WikipediaEditTracker/1.0 dboswell@chapman.edu"}
-    # Param to navigate to, and access, 250 user IPs
-    parameters = {
-        "action": "query",
-        "list": "recentchanges",
-        "rcprop": "timestamp|user",
-        "rclimit": 1,
-        "format": "json"
-    }
+        lang_select = sys.argv[1] # language specification
+        url = f"https://{lang_select}.wikipedia.org/w/api.php" # Constructing url
 
-    make_csv(url,parameters,headers)
+        # Header to simulate user access
+        headers = {"User-Agent": "WikipediaEditTracker/1.0 dboswell@chapman.edu"}
+        # Param to navigate to, and access, 250 user IPs
+        parameters = {
+            "action": "query",
+            "list": "recentchanges",
+            "rcprop": "timestamp|user",
+            "rclimit": 1,
+            "format": "json"
+        }
+
+        try:
+            make_csv(url,parameters,headers)
+        except KeyboardInterrupt:
+            print("Program Stopped\n")
+        except:
+            print("Ran into error making csv")
+    else:
+        print("Incorrect Arguments Provided\n Arguments Expected <program-name> <language-specification>\n Arguments given:")
+        # Printing out the received arguments
+        for i in range(len(sys.argv)):
+            print("\t",i,sys.argv[i])
+       
+
+   
 
