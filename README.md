@@ -96,7 +96,7 @@ python3 web_scraper.py
 python3 data_visualizer.py
 ```
 
-- A console interface should display with options to choose.
+- A console interface should display with options to choose from.
 
 #### Results
 
