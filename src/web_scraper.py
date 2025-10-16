@@ -14,7 +14,7 @@ pt - Portuguese - https://pt.wikipedia.org/w/api.php
 languages = ['en', 'de', 'fr', 'es', 'ja', 'ru', 'pt']
 
 # Define paths
-base_path = os.path.join(os.path.dirname(__file__), "src")
+base_path = os.path.dirname(__file__)
 streaming_script = os.path.join(base_path, "data_streaming.py")
 batching_script = os.path.join(base_path, "data_batching.py")
 # visualizer_script = os.path.join(base_path, "data_visualizer.py")
@@ -46,12 +46,14 @@ try:
 
 
 except KeyboardInterrupt:
-    print("\nKeyboardInterrupt received. Terminating processes...")
-    process_count = 0
     for process in process_list:
-        print(f"Terminating Process {process_count} -- PID={process.pid}")
-        process_count += 1
+        print(f"Terminating Process PID={process.pid}")
         process.terminate()
+        try:
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            print(f"Process PID={process.pid} did not exit, forcing kill.")
+            process.kill()
     print("All processes terminated.")
 
 

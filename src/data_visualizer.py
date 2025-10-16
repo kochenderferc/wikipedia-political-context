@@ -3,6 +3,7 @@ import csv
 import pandas as pd
 import glob
 import os
+import signal
 
 def read_csv(csv_file):
     try:
@@ -64,7 +65,7 @@ def plot_data(csv_data):
     plt.ylabel("Edit Counts")
     plt.title("Country vs Edit Counts")
     # Adding caption at the bottom
-    plt.figtext(0.5, 0.01, f"Figure 1:  Count of edits made to {selected_lang} Wikipedia by country from {start_date} to {end_date},N={total_edit_count}.", ha="center", fontsize=9, style="italic")
+    plt.figtext(0.5, 0.01, f"Figure 1:  Count of edits made to {selected_lang} Wikipedia by country, N={total_edit_count}.", ha="center", fontsize=9, style="italic")
     plt.tight_layout()  # fitting labels
     plt.show()
 
@@ -187,8 +188,9 @@ if __name__ == "__main__":
         while True:
             menu_selection = show_menu()
             selected_csv = int(menu_selection)
-            selected_lang = "en"
+            selected_lang = "ALL"
             if selected_csv == 1:
+                selected_lang = "en"
                 print("User Selected en-data_batching.csv")
                 csv_data = read_csv('../CSVs/en-data_batching.csv')
                 plot_data(csv_data)
@@ -274,7 +276,7 @@ if __name__ == "__main__":
                 plot_data(csv_data)
             elif selected_csv == 0:
                 print("Closing Interface")
-                break
+                os.kill(os.getpid(), signal.SIGINT)
             else:
                 continue
     except KeyboardInterrupt:
