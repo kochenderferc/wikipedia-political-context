@@ -31,24 +31,21 @@ try:
         process = subprocess.Popen(["python", streaming_script, language])
         process_list.append(process)
 
-        ### NEW CODE START
         # Run batching concurrently using subprocess.Popen instead of os.system
         print(f"Batching {language} Data")
         batch_process = subprocess.Popen(["python3", batching_script, language])
         process_list.append(batch_process)
-        ### NEW CODE END
 
         # os.system('cls' if os.name == 'nt' else 'clear')
 
     ### NEW CODE START
     print("All processes started. Press Ctrl+C to stop.")
-    # Keep the script running until user stops it manually
+    # Keep the script running until user stops it with Ctrl+c
     while True:
         time.sleep(1)
-    ### NEW CODE END
+
 
 except KeyboardInterrupt:
-    ### NEW CODE START
     print("\nKeyboardInterrupt received. Terminating processes...")
     process_count = 0
     for process in process_list:
@@ -56,7 +53,7 @@ except KeyboardInterrupt:
         process_count += 1
         process.terminate()
     print("All processes terminated.")
-    ### NEW CODE END
+
 
 except Exception as e:
     print("Something Broke", e)
