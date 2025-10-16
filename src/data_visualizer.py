@@ -64,7 +64,7 @@ def plot_data(csv_data):
     plt.ylabel("Edit Counts")
     plt.title("Country vs Edit Counts")
     # Adding caption at the bottom
-    plt.figtext(0.5, 0.01, f"Figure 1:  Count of edits made to english Wikipedia by country from {start_date} to {end_date},N={total_edit_count}.", ha="center", fontsize=9, style="italic")
+    plt.figtext(0.5, 0.01, f"Figure 1:  Count of edits made to {selected_lang} Wikipedia by country from {start_date} to {end_date},N={total_edit_count}.", ha="center", fontsize=9, style="italic")
     plt.tight_layout()  # fitting labels
     plt.show()
 
@@ -89,7 +89,7 @@ def get_csv_dates(csv_data):
 
 
 def combine_streaming_csvs():
-    csv_files = glob.glob("CSVs/*-data_streaming.csv")
+    csv_files = glob.glob("../CSVs/*-data_streaming.csv")
     dataframes = []
 
     for file in csv_files:
@@ -115,7 +115,7 @@ def combine_streaming_csvs():
 
 
 def combine_batching_csvs():
-    csv_files = glob.glob("CSVs/*-data_batching.csv")
+    csv_files = glob.glob("../CSVs/*-data_batching.csv")
     dataframes = []
 
     for file in csv_files:
@@ -187,23 +187,75 @@ if __name__ == "__main__":
         while True:
             menu_selection = show_menu()
             selected_csv = int(menu_selection)
-
+            selected_lang = "en"
             if selected_csv == 1:
                 print("User Selected en-data_batching.csv")
-                csv_data = read_csv('CSVs/en-data_batching.csv')
+                csv_data = read_csv('../CSVs/en-data_batching.csv')
                 plot_data(csv_data)
             elif selected_csv == 2:
                 print("User Selected en-data_streaming.csv")
-                csv_data = read_csv('CSVs/en-data_streaming.csv')
+                csv_data = read_csv('../CSVs/en-data_streaming.csv')
                 plot_data(csv_data)
             elif selected_csv == 3:
+                selected_lang = "fr"
                 print("User Selected fr-data_batching.csv")
-                csv_data = read_csv('CSVs/fr-data_batching.csv')
+                csv_data = read_csv('../CSVs/fr-data_batching.csv')
                 plot_data(csv_data)
             elif selected_csv == 4:
                 print("User Selected fr-data_streaming.csv")
-                csv_data = read_csv('CSVs/fr-data_streaming.csv')
+                csv_data = read_csv('../CSVs/fr-data_streaming.csv')
                 plot_data(csv_data)
+            elif selected_csv == 5:
+                selected_lang = "de"
+                print("User Selected de-data_batching.csv")
+                csv_data = read_csv('../CSVs/de-data_batching.csv')
+                plot_data(csv_data)
+            elif selected_csv == 6:
+                selected_lang = "de"
+                print("User Selected de-data_streaming.csv")
+                csv_data = read_csv('../CSVs/de-data_streaming.csv')
+                plot_data(csv_data)
+            elif selected_csv == 7:
+                selected_lang = "es"
+                print("User Selected es-data_batching.csv")
+                csv_data = read_csv('../CSVs/es-data_batching.csv')
+                plot_data(csv_data)
+            elif selected_csv == 8:
+                selected_lang = "es"
+                print("User Selected es-data_streaming.csv")
+                csv_data = read_csv('../CSVs/es-data_streaming.csv')
+                plot_data(csv_data)
+            elif selected_csv == 9:
+                selected_lang = "ja"
+                print("User Selected ja-data_batching.csv")
+                csv_data = read_csv('../CSVs/ja-data_batching.csv')
+                plot_data(csv_data)
+            elif selected_csv == 10:
+                selected_lang = "ja"
+                print("User Selected ja-data_streaming.csv")
+                csv_data = read_csv('../CSVs/ja-data_streaming.csv')
+                plot_data(csv_data)
+            elif selected_csv == 11:
+                selected_lang = "pt"
+                print("User Selected pt-data_batching.csv")
+                csv_data = read_csv('../CSVs/pt-data_batching.csv')
+                plot_data(csv_data)
+            elif selected_csv == 12:
+                selected_lang = "pt"
+                print("User Selected pt-data_streaming.csv")
+                csv_data = read_csv('../CSVs/pt-data_streaming.csv')
+                plot_data(csv_data)
+            elif selected_csv == 13:
+                selected_lang = "ru"
+                print("User Selected ru-data_batching.csv")
+                csv_data = read_csv('../CSVs/ru-data_batching.csv')
+                plot_data(csv_data)
+            elif selected_csv == 14:
+                selected_lang = "ru"
+                print("User Selected ru-data_streaming.csv")
+                csv_data = read_csv('../CSVs/ru-data_streaming.csv')
+                plot_data(csv_data)
+        
 
 
             elif selected_csv == 90:

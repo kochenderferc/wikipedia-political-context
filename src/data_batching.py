@@ -14,7 +14,7 @@ def make_text_green(text):
 def collect_data(json_data):
 
     # Opening database
-    reader = geoip2.database.Reader("GeoLite2-Country.mmdb") # Loading the database
+    reader = geoip2.database.Reader("../GeoLite2-Country.mmdb") # Loading the database
 
 
     ip_country_tuple_list = [] # Dictionary to hold IP and Country
@@ -61,7 +61,7 @@ def write_to_csv(lang_select,ip_country_tuples):
     print(len(ip_country_tuples)) # Printing out how many unregistered accounts there are in the dict
     
     row_number = 1
-    with open(f"CSVs/{lang_select}-data_batching.csv",'w',newline="") as csvFile:
+    with open(f"../CSVs/{lang_select}-data_batching.csv",'w',newline="") as csvFile:
         writer = csv.writer(csvFile)
         for pair in ip_country_tuples:
             ip = pair[0]

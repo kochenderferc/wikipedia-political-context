@@ -22,7 +22,7 @@ def make_csv(url,parameters,headers):
             data = response.json()
 
             # Loading the database
-            reader = geoip2.database.Reader("GeoLite2-Country.mmdb")
+            reader = geoip2.database.Reader("../GeoLite2-Country.mmdb")
 
             # Converting timestamp of recent edit into comparable value
             current_timestamp = data["query"]["recentchanges"][0]["timestamp"]
@@ -41,7 +41,7 @@ def make_csv(url,parameters,headers):
                     country = response.country.name
 
                     # Adding IP, Country, and Timestamp to csv
-                    with open(f"CSVs/{lang_select}-data_streaming.csv",'a',newline="") as csvFile:
+                    with open(f"../CSVs/{lang_select}-data_streaming.csv",'a',newline="") as csvFile:
                         writer = csv.writer(csvFile)
                         writer.writerow([ip,country,current_timestamp])
 
