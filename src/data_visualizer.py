@@ -40,7 +40,7 @@ def print_country_edit_counts(csv_data):
 
 
 def plot_data(csv_data):
-    language_dict = {"en":"English","fr":"French","de":"German","ja":"Japanese","pt":"Portuguese","ru":"Russian",}
+    language_dict = {"en":"English","es":"Spanish","fr":"French","de":"German","ja":"Japanese","pt":"Portuguese","ru":"Russian","NA":"NA"}
 
     country_ip_dict = csv_data[0]
     total_edit_count = csv_data[1]
@@ -287,11 +287,13 @@ if __name__ == "__main__":
                 print("Combining batching data...")
                 combine_batching_csvs()
             elif selected_csv == 92:
+                selected_lang = "NA"
                 collection_type = "streaming"
                 print("User Selected streaming_data_total.csv")
                 csv_data = read_csv('streaming_data_total.csv')
                 plot_data(csv_data)
             elif selected_csv == 93:
+                selected_lang = "NA"
                 collection_type = "batching"
                 print("User Selected batching_data_total.csv")
                 csv_data = read_csv('batching_data_total.csv')
