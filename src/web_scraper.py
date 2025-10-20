@@ -28,7 +28,7 @@ try:
         print(f"Streaming {language} Data")
 
         # Starting a process for each language being streamed
-        process = subprocess.Popen(["python", streaming_script, language])
+        process = subprocess.Popen(["python3", streaming_script, language])
         process_list.append(process)
 
         # Run batching concurrently using subprocess.Popen instead of os.system
