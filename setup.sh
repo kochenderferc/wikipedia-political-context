@@ -3,9 +3,8 @@
 # Exits on command failure
 set -e
 
-# ⚠️ IMPORTANT:
 # Run this script with "source setup.sh" (or ". setup.sh")
-# so that the virtual environment remains active after it finishes.
+# so that the virtual environment stays active after it finishes.
 if [[ "$0" == "$BASH_SOURCE" ]]; then
     echo "⚠️ Please run this script with 'source setup.sh' or '. setup.sh' so the venv stays active."
     exit 1
