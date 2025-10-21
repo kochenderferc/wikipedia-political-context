@@ -3,38 +3,40 @@
 # Exits on command failure
 set -e
 
+# ⚠️ IMPORTANT:
+# Run this script with "source setup.sh" (or ". setup.sh")
+# so that the virtual environment remains active after it finishes.
+if [[ "$0" == "$BASH_SOURCE" ]]; then
+    echo "⚠️ Please run this script with 'source setup.sh' or '. setup.sh' so the venv stays active."
+    exit 1
+fi
+
 echo "Detected OS type: $OSTYPE"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    echo "Running On Linux"
+    echo "Running on Linux"
     python3 -m venv venv
-    sleep 5
     source venv/bin/activate
-    sleep 5
     pip install -r requirements.txt
     cd src/
+
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    echo "Running On macOS"
+    echo "Running on macOS"
     python3 -m venv venv
-    sleep 5
     source venv/bin/activate
-    sleep 5
     pip install -r requirements.txt
     cd src/
+
 elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
-    echo "Running on windows"
+    echo "Running on Windows"
     python -m venv venv
-    sleep 5
     source venv/Scripts/activate
-    sleep 5
     pip install -r requirements.txt
     cd src/
+
 else
     echo "Unknown OS: $OSTYPE"
     exit 1
-fi 
+fi
 
-
-echo "Setup Complete"
-
-
+echo "Setup complete. Virtual environment is active."
