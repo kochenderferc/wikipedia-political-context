@@ -28,6 +28,23 @@ else
     exit 1
 fi
 
+
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    source venv/bin/activate
+    cd src/
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    source venv/bin/activate
+    cd src/
+elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
+    source venv/Scripts/activate
+    cd src/
+else
+    echo "Unknown OS: $OSTYPE"
+    exit 1
+fi
+
+
 echo "Setup Complete"
 
 
