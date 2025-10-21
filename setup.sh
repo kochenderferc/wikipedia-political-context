@@ -10,6 +10,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     python3 -m venv venv
     sleep 5
     source venv/bin/activate
+    sleep 5
     pip install -r requirements.txt
     cd src/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -17,6 +18,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     python3 -m venv venv
     sleep 5
     source venv/bin/activate
+    sleep 5
     pip install -r requirements.txt
     cd src/
 elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
@@ -24,6 +26,7 @@ elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
     python -m venv venv
     sleep 5
     source venv/Scripts/activate
+    sleep 5
     pip install -r requirements.txt
     cd src/
 else
