@@ -61,7 +61,7 @@ def write_to_csv(lang_select,ip_country_tuples):
     print(len(ip_country_tuples)) # Printing out how many unregistered accounts there are in the dict
     
     row_number = 1
-    with open(f"../CSVs/{lang_select}-data_batching.csv",'w',newline="") as csvFile:
+    with open(f"../data/{lang_select}-data_batching.csv",'w',newline="") as csvFile:
         writer = csv.writer(csvFile)
         for pair in ip_country_tuples:
             ip = pair[0]
