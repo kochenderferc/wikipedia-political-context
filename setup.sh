@@ -6,7 +6,7 @@ set -e
 # Run this script with "source setup.sh" (or ". setup.sh")
 # so that the virtual environment stays active after it finishes.
 if [[ "$0" == "$BASH_SOURCE" ]]; then
-    echo "⚠️ Please run this script with 'source setup.sh' or '. setup.sh' so the venv stays active."
+    echo "Please run this script with 'source setup.sh' or '. setup.sh' so the venv stays active."
     exit 1
 fi
 
