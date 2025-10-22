@@ -7,6 +7,7 @@ Kal Fernande
 Dylan Boswell
 
 ### [Literature Review](https://github.com/kochenderferc/wikipedia-political-context/blob/main/literature-review.md)
+#### [View link for Overleaf](https://www.overleaf.com/read/hgpcmrtcxsvm#875daa)
 
 ## Abstract
 
