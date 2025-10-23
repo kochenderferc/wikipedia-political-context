@@ -111,7 +111,7 @@ def combine_streaming_data():
         return
 
     combined_df = pd.concat(dataframes, ignore_index=True)
-    combined_df.to_csv("streaming_data_total.csv", index=False, header=False)
+    combined_df.to_csv("../data/aggregate_csv_data/streaming_data_total.csv", index=False, header=False)
     print(f"Combined {len(dataframes)} valid files into 'streaming_data_total.csv'.")
 
 
@@ -123,7 +123,7 @@ def combine_batching_data():
     dataframes = []
 
     for file in csv_files:
-        if os.path.getsize(file) > 0:  # Skip empty files
+        if os.path.getsize(file) > 0:  # Skipping empty files
             try:
                 df = pd.read_csv(file, header=None)
                 dataframes.append(df)
@@ -137,7 +137,7 @@ def combine_batching_data():
         return
 
     combined_df = pd.concat(dataframes, ignore_index=True)
-    combined_df.to_csv("batching_data_total.csv", index=False, header=False)
+    combined_df.to_csv("../data/aggregate_csv_data/batching_data_total.csv", index=False, header=False)
     print(f"\tCombined {len(dataframes)} valid files into 'batching_data_total.csv'.")
 
 
@@ -290,13 +290,13 @@ if __name__ == "__main__":
                 selected_lang = "NA"
                 collection_type = "streaming"
                 print("User Selected streaming_data_total.csv")
-                csv_data = read_csv('streaming_data_total.csv')
+                csv_data = read_csv('../data/aggregate_csv_data/streaming_data_total.csv')
                 plot_data(csv_data)
             elif selected_csv == 93:
                 selected_lang = "NA"
                 collection_type = "batching"
                 print("User Selected batching_data_total.csv")
-                csv_data = read_csv('batching_data_total.csv')
+                csv_data = read_csv('../data/aggregate_csv_data/batching_data_total.csv')
                 plot_data(csv_data)
             elif selected_csv == 0:
                 print("Closing Interface")
