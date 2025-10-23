@@ -7,6 +7,7 @@ Kal Fernande
 Dylan Boswell
 
 ### [Literature Review](https://github.com/kochenderferc/wikipedia-political-context/blob/main/literature-review.md)
+
 #### [View link for Overleaf](https://www.overleaf.com/read/hgpcmrtcxsvm#875daa)
 
 ## Abstract
@@ -52,37 +53,13 @@ cd wikipedia-political-context
 
 ### 2. Create and Activate a Virtual Environment
 
-#### macOS/Linux
+#### Running Setup Script will create venv and install dependencies
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+source ./setup.sh
 ```
 
-#### Windows
-
-```bash
-python3 -m venv venv
-venv\Scripts\activate
-```
-
----
-
-### 3. Install Project Dependencies
-
-With the virtual environment activated:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-### 4. Run the Program
-
-```bash
-cd src/
-```
+## 3. Run program
 
 The full pipeline (web_scraper → data_visualizer → graphs!):
 
