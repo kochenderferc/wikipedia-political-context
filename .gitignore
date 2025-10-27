@@ -1,1 +1,20 @@
+# macOS
 .DS_Store
+
+# LaTeX build files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+*.pdf
+
+# Python virtual environment
+venv/
+
+# Other temporary or compiled files
+__pycache__/
