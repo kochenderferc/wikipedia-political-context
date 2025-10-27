@@ -32,14 +32,12 @@ def read_csv(csv_file):
         exit()
         return None
 
-
 def print_country_edit_counts(csv_data):
     country_edit_count_dict = csv_data[0]
     for key, value in country_edit_count_dict.items():
         print(key,":",value)
 
-
-def plot_data(csv_data):
+def plot_data(csv_data,selected_lang,collection_type):
     language_dict = {"en":"English","es":"Spanish","fr":"French","de":"German","ja":"Japanese","pt":"Portuguese","ru":"Russian","NA":"NA"}
 
     country_ip_dict = csv_data[0]
@@ -72,7 +70,6 @@ def plot_data(csv_data):
     plt.tight_layout()  # fitting labels
     plt.show()
 
-
 def get_csv_dates(csv_data):
     try:
         dates = []
@@ -88,9 +85,6 @@ def get_csv_dates(csv_data):
         print("\n\tERROR READING FROM CSV FILE: '",csv_data,"'\n\n")
         exit()
         return None
-
-
-
 
 def combine_streaming_data():
     csv_files = glob.glob("../data/*-data_streaming.csv")
@@ -114,10 +108,6 @@ def combine_streaming_data():
     combined_df.to_csv("../data/aggregate_csv_data/streaming_data_total.csv", index=False, header=False)
     print(f"Combined {len(dataframes)} valid files into 'streaming_data_total.csv'.")
 
-
-
-
-
 def combine_batching_data():
     csv_files = glob.glob("../data/*-data_batching.csv")
     dataframes = []
@@ -139,8 +129,6 @@ def combine_batching_data():
     combined_df = pd.concat(dataframes, ignore_index=True)
     combined_df.to_csv("../data/aggregate_csv_data/batching_data_total.csv", index=False, header=False)
     print(f"\tCombined {len(dataframes)} valid files into 'batching_data_total.csv'.")
-
-
 
 def show_menu():
     os.system("clear")
@@ -183,126 +171,98 @@ def show_menu():
             print(f"\t{i+1}. {option}")
     return input("\nSelect an option: ")
 
+def display_data(language,collection_type):
+    print(f"User Selected {language}-data_{collection_type}.csv")
+    csv_data = read_csv(f'../data/{language}-data_{collection_type}.csv')
+    plot_data(csv_data,language,collection_type)
 
-
+def run_interface():
+    menu_selection = show_menu()
+    user_input = int(menu_selection)
+    selected_lang = "ALL"
+    
+    # Combining Data
+    if user_input == 90:
+        print("Combining streaming data...")
+        combine_streaming_data()
+        return
+    elif user_input == 91:
+        print("Combining batching data...")
+        combine_batching_data()
+        return
+    elif user_input == 92:
+        selected_lang = "NA"
+        collection_type = "streaming"
+        print("User Selected streaming_data_total.csv")
+        csv_data = read_csv('../data/aggregate_csv_data/streaming_data_total.csv')
+        plot_data(csv_data)
+        return
+    elif user_input == 93:
+        selected_lang = "NA"
+        collection_type = "batching"
+        print("User Selected batching_data_total.csv")
+        csv_data = read_csv('../data/aggregate_csv_data/batching_data_total.csv')
+        plot_data(csv_data)
+        return
+    elif user_input < 1:
+        print("Closing Interface")
+        os.kill(os.getpid(), signal.SIGINT)
+        return
+    
+    # For invalid inputs
+    if user_input > 14:
+        print("Invalid Entry",user_input)
+        return
+    
+    # Individual Datasets
+    if user_input == 1: # English - Batching
+        selected_lang = "en"
+        collection_type = "batching"
+    elif user_input == 2: # English - Streaming
+        selected_lang = "en"
+        collection_type = "streaming"
+    elif user_input == 3: # French - Batching
+        selected_lang = "fr"
+        collection_type = "batching"
+    elif user_input == 4: # French - Streaming
+        selected_lang = "fr"
+        collection_type = "streaming"
+    elif user_input == 5: # German - Batching
+        selected_lang = "de"
+        collection_type = "batching"
+    elif user_input == 6: # German - Streaming
+        selected_lang = "de"
+        collection_type = "streaming"
+    elif user_input == 7: # Spanish - Batching
+        selected_lang = "es"
+        collection_type = "batching"
+    elif user_input == 8: # Spanish - Streaming
+        selected_lang = "es"
+        collection_type = "streaming"
+    elif user_input == 9: # Japanese - Batching
+        selected_lang = "ja"
+        collection_type = "batching"
+    elif user_input == 10: # Japanese - Streaming
+        selected_lang = "ja"
+        collection_type = "streaming"
+    elif user_input == 11: # Protuguese - Batching
+        selected_lang = "pt"
+        collection_type = "batching"
+    elif user_input == 12: # Protuguese - Streaming
+        selected_lang = "pt"
+        collection_type = "streaming"
+    elif user_input == 13: # Russian - Batching
+        selected_lang = "ru"
+        collection_type = "batching"
+    elif user_input == 14: # Russian - Streaming
+        selected_lang = "ru"
+        collection_type = "streaming"
+    display_data(selected_lang,collection_type)
 
 if __name__ == "__main__":
-
     try:
         while True:
-            menu_selection = show_menu()
-            selected_csv = int(menu_selection)
-            selected_lang = "ALL"
-            if selected_csv == 1:
-                selected_lang = "en"
-                collection_type = "batching"
-                print("User Selected en-data_batching.csv")
-                csv_data = read_csv('../data/en-data_batching.csv')
-                plot_data(csv_data)
-            elif selected_csv == 2:
-                selected_lang = "en"
-                collection_type = "streaming"
-                print("User Selected en-data_streaming.csv")
-                csv_data = read_csv('../data/en-data_streaming.csv')
-                plot_data(csv_data)
-            elif selected_csv == 3:
-                selected_lang = "fr"
-                collection_type = "batching"
-                print("User Selected fr-data_batching.csv")
-                csv_data = read_csv('../data/fr-data_batching.csv')
-                plot_data(csv_data)
-            elif selected_csv == 4:
-                selected_lang = "fr"
-                collection_type = "streaming"
-                print("User Selected fr-data_streaming.csv")
-                csv_data = read_csv('../data/fr-data_streaming.csv')
-                plot_data(csv_data)
-            elif selected_csv == 5:
-                selected_lang = "de"
-                collection_type = "batching"
-                print("User Selected de-data_batching.csv")
-                csv_data = read_csv('../data/de-data_batching.csv')
-                plot_data(csv_data)
-            elif selected_csv == 6:
-                selected_lang = "de"
-                collection_type = "streaming"
-                print("User Selected de-data_streaming.csv")
-                csv_data = read_csv('../data/de-data_streaming.csv')
-                plot_data(csv_data)
-            elif selected_csv == 7:
-                selected_lang = "es"
-                collection_type = "batching"
-                print("User Selected es-data_batching.csv")
-                csv_data = read_csv('../data/es-data_batching.csv')
-                plot_data(csv_data)
-            elif selected_csv == 8:
-                selected_lang = "es"
-                collection_type = "streaming"
-                print("User Selected es-data_streaming.csv")
-                csv_data = read_csv('../data/es-data_streaming.csv')
-                plot_data(csv_data)
-            elif selected_csv == 9:
-                selected_lang = "ja"
-                collection_type = "batching"
-                print("User Selected ja-data_batching.csv")
-                csv_data = read_csv('../data/ja-data_batching.csv')
-                plot_data(csv_data)
-            elif selected_csv == 10:
-                selected_lang = "ja"
-                collection_type = "streaming"
-                print("User Selected ja-data_streaming.csv")
-                csv_data = read_csv('../data/ja-data_streaming.csv')
-                plot_data(csv_data)
-            elif selected_csv == 11:
-                selected_lang = "pt"
-                collection_type = "batching"
-                print("User Selected pt-data_batching.csv")
-                csv_data = read_csv('../data/pt-data_batching.csv')
-                plot_data(csv_data)
-            elif selected_csv == 12:
-                selected_lang = "pt"
-                collection_type = "streaming"
-                print("User Selected pt-data_streaming.csv")
-                csv_data = read_csv('../data/pt-data_streaming.csv')
-                plot_data(csv_data)
-            elif selected_csv == 13:
-                selected_lang = "ru"
-                collection_type = "batching"
-                print("User Selected ru-data_batching.csv")
-                csv_data = read_csv('../data/ru-data_batching.csv')
-                plot_data(csv_data)
-            elif selected_csv == 14:
-                selected_lang = "ru"
-                collection_type = "streaming"
-                print("User Selected ru-data_streaming.csv")
-                csv_data = read_csv('../data/ru-data_streaming.csv')
-                plot_data(csv_data)
-        
-
-
-            elif selected_csv == 90:
-                print("Combining streaming data...")
-                combine_streaming_data()
-            elif selected_csv == 91:
-                print("Combining batching data...")
-                combine_batching_data()
-            elif selected_csv == 92:
-                selected_lang = "NA"
-                collection_type = "streaming"
-                print("User Selected streaming_data_total.csv")
-                csv_data = read_csv('../data/aggregate_csv_data/streaming_data_total.csv')
-                plot_data(csv_data)
-            elif selected_csv == 93:
-                selected_lang = "NA"
-                collection_type = "batching"
-                print("User Selected batching_data_total.csv")
-                csv_data = read_csv('../data/aggregate_csv_data/batching_data_total.csv')
-                plot_data(csv_data)
-            elif selected_csv == 0:
-                print("Closing Interface")
-                os.kill(os.getpid(), signal.SIGINT)
-            else:
-                continue
+            run_interface()
     except KeyboardInterrupt:
         print("Program Stopped")
             
