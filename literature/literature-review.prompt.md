@@ -1,15 +1,17 @@
 ---
-type: agent-workflow
-version: 1.1
+title: Literature Review Agent Workflow
 author: Dylan Boswell
-created: 2025-28-22
-updated: 2025-28-22
-description: Automated literature review workflow for Wikipedia Governance research
+date: 2025-10-22
+description: Automated workflow for Wikipedia Governance research
+---
+
 prerequisites:
-  - pdftotext command-line tool installed
-  - PDF files in literature/ folder
-  - paper/references.bib file exists (or will be created)
-  - AI agent with file system access
+
+- pdftotext command-line tool installed
+- PDF files in literature/ folder
+- paper/references.bib file exists (or will be created)
+- AI agent with file system access
+
 ---
 
 # Literature Review Agent Workflow

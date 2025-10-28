@@ -11,7 +11,7 @@ def make_text_red(text):
 def make_text_green(text):
     return f"\033[92m{text}\033[0m"
 
-def collect_data(json_data):
+def collect_data_from_json(json_data):
 
     # Opening database
     reader = geoip2.database.Reader("../GeoLite2-Country.mmdb") # Loading the database
@@ -56,7 +56,6 @@ def print_score(unregistered_count,registered_count,request_number):
     print(make_text_green(f"\tUnregistered Accounts: {unregistered_count}"))
     print(f"\tTotal Requests Made: {request_number}")    
 
-
 def write_to_csv(lang_select,ip_country_tuples):
     print(len(ip_country_tuples)) # Printing out how many unregistered accounts there are in the dict
     
@@ -73,14 +72,13 @@ def write_to_csv(lang_select,ip_country_tuples):
     # Closing csv
     csvFile.close()
 
-def construct_csv(url,parameters,headers,language):
+def build_csv(url,parameters,headers,language):
     
     response = requests.get(url, params=parameters, headers=headers) # Making request and storing data as json
     data = response.json()
     
     # Collecting useful data from json
-    ip_country,request_number,unregistered_count,registered_count = collect_data(data)
-
+    ip_country,request_number,unregistered_count,registered_count = collect_data_from_json(data)
 
 
     # Printing out data distribution
@@ -107,8 +105,7 @@ if __name__ == "__main__":
             "format": "json"
         }
         
-        construct_csv(url,parameters,headers,lang_select)
-        
+        build_csv(url,parameters,headers,lang_select)
     else:
         print("Incorrect Arguments Provided\n Arguments Expected <program-name> <language-specification>\n Arguments given:")
         # Printing out the received arguments
