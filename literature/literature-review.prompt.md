@@ -3,15 +3,11 @@ title: Literature Review Agent Workflow
 author: Dylan Boswell
 date: 2025-10-22
 description: Automated workflow for Wikipedia Governance research
----
-
 prerequisites:
-
-- pdftotext command-line tool installed
-- PDF files in literature/ folder
-- paper/references.bib file exists (or will be created)
-- AI agent with file system access
-
+  - pdftotext command-line tool installed
+  - PDF files in literature/ folder
+  - paper/references.bib file exists (or will be created)
+  - AI agent with file system access
 ---
 
 # Literature Review Agent Workflow
@@ -43,7 +39,7 @@ For each new PDF article in the `literature/` folder:
 
 2. **Extract key information** from the article and add to `literature-review.md`:
 
-   - Link to Google Scholar query containg the title of the article.
+   - Link to Google Scholar query containing the title of the article.
    - **Summary** (2 sentences): Main thesis or contribution of the article
    - **Methodology** (2 sentences): Research methods employed and the kind of data used (e.g., quantitative/qualitative, dataset size, time period)
    - **Results** (1 sentence): Key findings and conclusions
