@@ -18,70 +18,74 @@ This paper goes into how Wikipedia monitors edits in order to avoid vandalism, w
 
 _Auto-generated on 2025-10-29 04:47_
 
-## [Article19](https://scholar.google.com/scholar?q=Article19+2025)
+## Article: BRIEFING NOTE — International and Comparative Defamation Standards (2004)
 
-**Citation key:** @Anon2025Article19  
-**Authors:** Unknown  
-**Year:** 2025  
-**Source file:** `Article19.pdf`
+**Authors**: ARTICLE 19  
+**Google Scholar**: https://scholar.google.com/scholar?q=BRIEFING+NOTE+On+International+and+Comparative+Defamation+Standards
 
-### Summary
+**Summary**: A comprehensive briefing by ARTICLE 19 summarizing international standards on defamation law, stressing that criminal defamation and disproportionate sanctions create chilling effects on speech. It synthesizes ECHR and UN jurisprudence and recommends civil remedies, proportionality, and protections for journalistic sources.  
+**Research Focus**: Legal standards and governance of defamation law; policy analysis.  
+**Methodology**: Legal-policy synthesis drawing on international case law (ECHR, UN) and comparative examples; not empirical.  
+**Findings**: Criminal defamation and heavy penalties deter public-interest speech; protections such as burden of proof on plaintiffs, limits on damages, and rights to reply mitigate chilling effects.  
+**Relevance to Our Research**: Directly frames legal mechanisms that may chill Wikipedia contributors (e.g., criminal or civil risks for editors), and points to which legal variables to include when measuring country-level repression.  
+**Evaluation**: 4/5 — Authoritative policy synthesis from a respected NGO; high relevance though not an empirical study.
 
-BRIEFING NOTE On International and Comparative Defamation Standards by ARTICLE 19 Global Campaign for Free Expression London February 2004 This Briefing Note provides an overview of pertinent international freedom of information standards that directly relate to defamation. Frequent references are made to cases decided by the European Court of Human Rights, because of its detailed jurisprudence regarding the balance between defamation, or protecting reputations, and the right to freedom of expression. The set of principles developed and expounded by ARTICLE 19 in its publication, Defining Defamation: Principles on Freedom of Expression and Protection of Reputations1 (Defining Defamation), serve as a frame of reference for the Briefing Note as a whole.
+**Resources**:
 
-### Relevance to Wikipedia Governance
-
-This work relates to freedom of expression and potential chilling effects on participation. Implications for Wikipedia governance include how legal constraints, platform policies, and editor risk perceptions may influence editing behaviors across languages and jurisdictions.
-
----
-
-## [Chapter 7 Townend Chilling Effects Accepted Version 1 3 17](https://scholar.google.com/scholar?q=Chapter+7+Townend+Chilling+Effects+Accepted+Version+1+3+17+2023)
-
-**Citation key:** @Anon2023Chapter7Town  
-**Authors:** Unknown  
-**Year:** 2023  
-**Source file:** `Chapter 7 Townend-chilling effects-accepted version-1-3-17.pdf`
-
-### Summary
-
-Freedom of expression and the chilling effect Freedom of expression and the chilling effect Judith Townend Publication date Publication date 20-06-2017 Licence Licence This work is made available under the Copyright not evaluated licence and should only be used in accordance with that licence. Freedom of expression and the chilling effect (Version 1). This document is made available in line with publisher policy and may differ from the published version. Chapter 7 Freedom of Expression and the Chilling E ffect Judith Townend, 1 1. Introduction to the chilling effect The notion of speech, or expression, being ‘chilled’ is a pervasive and popular one. It metaphorically suggests a negative deterrence of communication: that a person or organisation is made physically colder by inhibiting the exercise of their right to free expression.
-
-### Relevance to Wikipedia Governance
-
-This work relates to freedom of expression and potential chilling effects on participation. Implications for Wikipedia governance include how legal constraints, platform policies, and editor risk perceptions may influence editing behaviors across languages and jurisdictions.
+- Policy brief: literature/Article19.pdf
 
 ---
 
-## [Defamation Principles (online)](https://scholar.google.com/scholar?q=Defamation+Principles+%28online%29+2025)
+## Townend, J. (2017). Freedom of Expression and the Chilling Effect (Chapter)
 
-**Citation key:** @Anon2025DefamationPr  
-**Authors:** Unknown  
-**Year:** 2025  
-**Source file:** `Defamation-Principles-(online)-.pdf`
+**Authors**: Judith Townend  
+**Google Scholar**: https://scholar.google.com/scholar?q=Freedom+of+Expression+and+the+Chilling+Effect
 
-### Summary
+**Summary**: A conceptual and empirical overview of the "chilling effect" across defamation, privacy, FOI and surveillance contexts. The chapter argues the concept is widely used but under-theorized and calls for clearer measurement strategies for empirical research.  
+**Research Focus**: Theoretical framing and empirical challenges in documenting chilling effects (measurement-focused).  
+**Methodology**: Literature review plus synthesis of comparative empirical attempts (surveys, content analysis) and discussion of methodological limits.  
+**Findings**: Evidence of chilling is often anecdotal; measurement is difficult because the claim is counterfactual. Suggests mixed-method observational approaches (behavioural traces, content analysis) to detect chilling.  
+**Relevance to Our Research**: Provides measurement guidance directly applicable to designing detection strategies for reduced editing activity or self-censorship on Wikipedia.  
+**Evaluation**: 4/5 — Strong conceptual clarity and useful methodological suggestions; limited original empirical evidence.
 
-The Principles are based on the premise that, in a democratic society, freedom of expression must be guaranteed and may be subject only to narrowly drawn restrictions which are necessary to protect legitimate interests, including reputations. In particular, they set out standards of respect for freedom of expression to which legal provisions designed to protect reputations should, at a minimum, conform. The Revised Principles (the second edition) were developed following a meeting of freedom of expression and media experts on 4 December 2015 in London and subsequent broader public consultations organised by ARTICLE 19.
+**Resources**:
 
-### Relevance to Wikipedia Governance
-
-This work relates to freedom of expression and potential chilling effects on participation. Implications for Wikipedia governance include how legal constraints, platform policies, and editor risk perceptions may influence editing behaviors across languages and jurisdictions.
+- Chapter file: literature/Chapter 7 Townend-chilling effects-accepted version-1-3-17.pdf
 
 ---
 
-## [The Concept Of Chilling Effect 20210322](https://scholar.google.com/scholar?q=The+Concept+Of+Chilling+Effect+20210322+2021)
+## ARTICLE 19 (2017). Defining Defamation: Principles on Freedom of Expression and Protection of Reputation
 
-**Citation key:** @Anon2021TheConceptOf  
-**Authors:** Unknown  
-**Year:** 2021  
-**Source file:** `the-concept-of-chilling-effect-20210322.pdf`
+**Authors**: ARTICLE 19  
+**Google Scholar**: https://scholar.google.com/scholar?q=Defining+Defamation:+Principles+on+Freedom+of+Expression+and+Protection+of+Reputation
 
-### Summary
+**Summary**: Updated principles and policy guidance that set best-practice norms for defamation law (civil remedies, burden of proof, limits on damages, protection of sources). Emphasizes minimizing chilling effects of reputation laws.  
+**Research Focus**: Legal/policy recommendations for defamation law to protect free expression.  
+**Methodology**: Expert drafting and comparative review of jurisprudence and national practice.  
+**Findings**: Recommends abolition of criminal defamation, prioritizing non-pecuniary remedies, and procedural safeguards to reduce self-censorship.  
+**Relevance to Our Research**: Provides normative variables for coding (e.g., presence of criminal defamation, max damages) and helps interpret how legal regimes could map to editing behavior.  
+**Evaluation**: 4/5 — High-quality policy guidance; non-empirical.
 
-This publication is available as a PDF on the Project website under a Creative Commons license that allows copying and distributing the publication, only in its entirety, as long as it is attributed to the Open Society Foundations and used for noncommercial educational or public policy purposes. In practice, this concept has been predominantly used in freedom of expression- related cases where the applicants were journalists. This ECHR détour is warranted if only because chilling effect4 has been extensively and regularly used by the European Court of Human Rights, mostly in freedom of expression related cases and more recently in cases raising judicial independence issues, as will be shown in Section 3.
+**Resources**:
 
-### Relevance to Wikipedia Governance
+- Policy brief file: literature/Defamation-Principles-(online)-.pdf
 
-This work relates to freedom of expression and potential chilling effects on participation. Implications for Wikipedia governance include how legal constraints, platform policies, and editor risk perceptions may influence editing behaviors across languages and jurisdictions.
+---
+
+## Pech, L. (2021). The Concept of Chilling Effect (Open Society Foundations)
+
+**Authors**: Laurent Pech  
+**Google Scholar**: https://scholar.google.com/scholar?q=The+Concept+of+Chilling+Effect
+
+**Summary**: A policy-oriented report tracing the chilling effect across ECHR and EU law and arguing that the EU institutions should more actively use the concept to protect democracy, judicial independence, and civil society.  
+**Research Focus**: Legal-political analysis of chilling effects in EU/ECHR contexts and implications for civic space.  
+**Methodology**: Legal analysis of case law (ECtHR, CJEU) and policy recommendations; includes country examples and institutional review.  
+**Findings**: Chilling effects are a recognized legal phenomenon and have clear impacts on journalists, judges, NGOs; EU courts are beginning to apply the concept to protect fundamental rights.  
+**Relevance to Our Research**: Useful for linking legal/regulatory features (e.g., NGO-targeting laws, disciplinary regimes for judges) with chilling mechanisms that could depress Wikipedia participation.  
+**Evaluation**: 4/5 — Thorough, up-to-date policy analysis with direct applicability to country-level coding.
+
+**Resources**:
+
+- Report file: literature/the-concept-of-chilling-effect-20210322.pdf
 
 ---
