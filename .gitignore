@@ -11,7 +11,7 @@
 *.toc
 *.bbl
 *.blg
-*.pdf
+*.txt
 
 # Python virtual environment
 venv/
