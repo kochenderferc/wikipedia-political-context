@@ -1,0 +1,33 @@
+% Methodology
+% Be specific enough that someone could reproduce your work
+
+\label{sec:methodology}
+
+% Overview
+Using the Wikipedia API, we will track edits from frequently visited versions of Wikipedia for different countries for edits made by unregistered users. We will use the IP addresses of those unregistered users to link them to that editor’s country. This will be used to compare edit frequency per country against benchmarks for free speech laws. Our benchmarks for free speech laws will be sourced from the V-Dem democracy index.
+
+\subsection{Data Collection}
+
+We used the Wikipedia API for frequently visited version of Wikipedia for different countries. We collected IP address information for edits by unregistered users.
+
+% Example of how to cite a dataset or tool:
+% We collected data from the Wikipedia API \cite{wikipedia-api} covering...
+
+\subsection{Data Processing}
+
+We filtered out edits made by registered users, as we do not have access to their IP addresses. Unregistered users were linked to their respective country by IP address. Our data processing pipeline is available in our GitHub repository.\footnote{\url{https://github.com/kochenderferc/wikipedia-political-context}}
+
+\subsection{Analysis Methods}
+
+[Describe your analytical approach. What techniques did you use? Why?]
+
+% If you have equations, you can include them:
+% \begin{equation}
+% your\_formula = here
+% \end{equation}
+
+\subsection{Ethical Considerations}
+Optional: Include this if your project involves human subjects data, user behavior analysis, or if your institution requires ethics discussion. For basic Wikipedia article analysis, this may not be necessary - just ensure proper citation in your Data Collection section.
+
+Example: All data consists of publicly available Wikipedia content accessed in compliance with \href{https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use}{Wikimedia's Terms of Use}.
+
