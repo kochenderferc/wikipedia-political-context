@@ -22,28 +22,32 @@ def collect_data_from_json(json_data):
     unregistered_count = 0
     registered_count = 0
     past_ip = "2804:7F3:404:9426:14FD:82D8:898D:CABE"
-    # Iterating through all recent edits, finding unregistered accounts, and collecting response data
-    for change in json_data["query"]["recentchanges"]:
-        request_number += 1
-        ip = change["user"] # Getting IP
-        if past_ip != ip:
-            try:
-                
-                response = reader.country(ip) # Getting country from geoip2 database
-                country = response.country.name # Storing IP and Country in dictionary
 
-                print(ip, country) # Printing country name via its ip pairing
-                ip_country_tuple_list.append((ip,country)) # Adding to tuple_list
+    try:
+        # Iterating through all recent edits, finding unregistered accounts, and collecting response data
+        for change in json_data["query"]["recentchanges"]:
+            request_number += 1
+            ip = change["user"] # Getting IP
+            if past_ip != ip:
+                try:
+                    
+                    response = reader.country(ip) # Getting country from geoip2 database
+                    country = response.country.name # Storing IP and Country in dictionary
 
-                time.sleep(0.5)
-                print(make_text_green(f"Unregistered Account - {ip} -> {country} #{unregistered_count+1}"))
-                unregistered_count += 1
+                    print(ip, country) # Printing country name via its ip pairing
+                    ip_country_tuple_list.append((ip,country)) # Adding to tuple_list
 
-                # Tracking ip to make sure its not a duplicate edit from one ip.
-                past_ip = ip
-            except:
-                print(make_text_red(f"Registered Account - {request_number}")) # In case we encounter an invalid IP/Username
-                registered_count += 1
+                    time.sleep(0.5)
+                    print(make_text_green(f"Unregistered Account - {ip} -> {country} #{unregistered_count+1}"))
+                    unregistered_count += 1
+
+                    # Tracking ip to make sure its not a duplicate edit from one ip.
+                    past_ip = ip
+                except:
+                    print(make_text_red(f"Registered Account - {request_number}")) # In case we encounter an invalid IP/Username
+                    registered_count += 1
+    except Exception as e:
+        print("Error Collecting Data from JSON:",lang_select,"\n",e)
 
     # Closing database
     reader.close()
