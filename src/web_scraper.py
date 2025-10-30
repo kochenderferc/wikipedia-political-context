@@ -58,7 +58,7 @@ process_list = []
 
 try:
     # Start data_streaming.py/data_batching.py process for each language
-    for language in languages:
+    for language in testing_languages:
         # Starting a process for each language being streamed
         print(f"Streaming {language} Data")
         process = subprocess.Popen(["python3", streaming_script, language])
