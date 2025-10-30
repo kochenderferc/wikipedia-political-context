@@ -3,6 +3,7 @@ import geoip2.database
 import csv
 from datetime import datetime
 import sys
+import time
 
 def make_text_red(text):
     return f"\033[91m{text}\033[0m"
@@ -16,6 +17,7 @@ def make_csv(url,parameters,headers):
     # Replace "Z" with "+00:00" so Python knows it's UTC
     previous_timestamp = datetime.fromisoformat(previous_timestamp.replace("Z", "+00:00"))
     while True:
+        time.sleep(0.5) # Sleeping to avoid overwhelming processor
         try:
             # Making request and storing data as json
             response = requests.get(url, params=parameters, headers=headers)
@@ -61,7 +63,7 @@ def make_csv(url,parameters,headers):
             reader.close()
             break
         except:
-            print("Program Stalling")
+            print("Program Stalling",lang_select)
         
 if __name__ == "__main__":
     if len(sys.argv) == 2: 
