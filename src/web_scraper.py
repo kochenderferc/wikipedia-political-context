@@ -1,23 +1,29 @@
 import subprocess
 import time
 import os
-
+import glob
+import pandas as pd
 testing_languages=[
-    'ko',  # Korean
-    'id',  # Indonesian
-    'vi',  # Vietnamese
-    'cs',  # Czech
-    'fi',  # Finnish
-    'no',  # Norwegian (Bokmål)
-    'hu',  # Hungarian
-    'ro',  # Romanian
-    'tr',  # Turkish
-    'he',  # Hebrew
-    'th',  # Thai
-    'da',  # Danish
-    'el',  # Greek
-    'hi',  # Hindi
-    'bn',  # Bengali
+    'sq',  # Albanian
+    'az',  # Azerbaijani
+    'bs',  # Bosnian
+    'gl',  # Galician
+    'is',  # Icelandic
+    'kk',  # Kazakh
+    'mk',  # Macedonian
+    'mn',  # Mongolian
+    'ne',  # Nepali
+    'si',  # Sinhala
+    'sw',  # Swahili
+    'ta',  # Tamil
+    'te',  # Telugu
+    'ur',  # Urdu
+    'uz',  # Uzbek
+    'ka',  # Georgian
+    'cy',  # Welsh
+    'ga',  # Irish
+    'eu',  # Basque
+    'af',  # Afrikaans
 ]
 
 
@@ -35,7 +41,6 @@ languages_that_dont = [
     'cs',  # Czech
     'fi',  # Finnish
     'no',  # Norwegian (Bokmål)
-    'hu',  # Hungarian
     'ro',  # Romanian
     'tr',  # Turkish
     'he',  # Hebrew
@@ -48,6 +53,26 @@ languages_that_dont = [
     'de',  # German
     'ja',  # Japanese
     'pt',  # Portuguese
+    'it',  # Italian
+    'nl',  # Dutch
+    'pl',  # Polish
+    'sv',  # Swedish
+    'uk',  # Ukrainian
+    'ca',  # Catalan
+    'fa',  # Persian (Farsi)
+    'ar',  # Arabic
+    'sr',  # Serbian
+    'zh',  # Chinese
+    'et',  # Estonian
+    'sk',  # Slovak
+    'lt',  # Lithuanian
+    'lv',  # Latvian
+    'bg',  # Bulgarian
+    'hr',  # Croatian
+    'sl',  # Slovenian
+    'ms',  # Malay
+    'ta',  # Tamil
+    'eo',  # Esperanto
 ]
 
 # Define paths
@@ -75,7 +100,7 @@ try:
         time.sleep(1)
 
 except KeyboardInterrupt:
-
+    # Ending processes
     process_num = 1
     for process in process_list:
         print(f"\t{process_num}.) Terminating Process PID={process.pid}")
@@ -87,6 +112,15 @@ except KeyboardInterrupt:
             process.kill()
         process_num += 1
     print("All processes terminated.")
+
+    # Cleaning up empty CSV files
+    csv_files = glob.glob("../data/*.csv")
+    dataframes = []
+    for file in csv_files:
+        if os.path.getsize(file) <= 0:  # Removing Empty CSV
+            print(file)
+            os.system(f"rm {file}")
+            print(f"Removed empty file: {file}")
 
 except Exception as e:
     print("Something Broke", e)
