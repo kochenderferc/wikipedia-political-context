@@ -5,6 +5,7 @@ import glob
 import os
 import signal
 
+
 def read_csv(csv_file):
     try:
         country_edit_dict = {}
