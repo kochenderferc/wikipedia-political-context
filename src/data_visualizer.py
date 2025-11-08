@@ -4,7 +4,8 @@ import pandas as pd
 import glob
 import os
 import signal
-
+import SpeechAnalysis
+import time # Remove this
 
 def read_csv(csv_file):
     try:
@@ -148,6 +149,7 @@ def show_menu():
         "pt-data_streaming.csv",
         "ru-data_batching.csv",
         "ru-data_streaming.csv",
+        "View Speech Analysis Plot",
         "Combine Streaming data",
         "Combine Batching data",
         "View streaming_data_total.csv",
@@ -155,7 +157,7 @@ def show_menu():
         "Exit"
     ]
     print("\n=== DATA MENU ===")
-    for i, option in enumerate(options):
+    for i, option in enumerate(options): # Using enumerate to print/get index of options in incremental order
         if option == "Exit":
             print(f"{0}. {option}")
         elif option == "Combine Streaming data":
@@ -211,7 +213,7 @@ def run_interface():
         return
     
     # For invalid inputs
-    if user_input > 14:
+    if user_input > 15:
         print("Invalid Entry",user_input)
         return
     
@@ -258,6 +260,10 @@ def run_interface():
     elif user_input == 14: # Russian - Streaming
         selected_lang = "ru"
         collection_type = "streaming"
+    elif user_input == 15: # Speech Analysis Plot
+        analysis = SpeechAnalysis.SpeechAnalysis('V-Dem-CY-Full+Others-v15.csv')
+        analysis.make_plot()
+        return
     display_data(selected_lang,collection_type)
 
 if __name__ == "__main__":
