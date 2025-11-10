@@ -165,8 +165,6 @@ def show_menu(csv_files):
     additional_functions = [
         "Combine Streaming data",
         "Combine Batching data",
-        "View streaming_data_total.csv",
-        "View batching_data_total.csv"
     ]
     additional_function_map = {}
     for i, function in enumerate(additional_functions):
@@ -275,32 +273,7 @@ def run_interface():
         print("Combining batching data...")
         combine_batching_data()
         return
-    elif index_selection == 92:
-        selected_lang = "NA"
-        collection_type = "streaming"
-        print("User Selected streaming_data_total.csv")
-        csv_data = read_csv('../data/aggregate_csv_data/streaming_data_total.csv')
-        plot_data(csv_data)
-        return
-    elif index_selection == 93:
-        selected_lang = "NA"
-        collection_type = "batching"
-        print("User Selected batching_data_total.csv")
-        csv_data = read_csv('../data/aggregate_csv_data/batching_data_total.csv')
-        plot_data(csv_data)
-        return
-    elif index_selection == 93:
-        selected_lang = "NA"
-        collection_type = "batching"
-        print("User Selected batching_data_total.csv")
-        csv_data = read_csv('../data/aggregate_csv_data/batching_data_total.csv')
-        plot_data(csv_data)
-        return
 
-    
-    
-    
-    
 
 
 def get_language_and_collection(file_name):
