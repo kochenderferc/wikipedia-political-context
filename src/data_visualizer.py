@@ -40,7 +40,7 @@ def print_country_edit_counts(csv_data):
         print(key,":",value)
 
 def plot_data(csv_data,selected_lang,collection_type):
-    language_dict = {"en":"English","es":"Spanish","fr":"French","de":"German","ja":"Japanese","pt":"Portuguese","ru":"Russian","NA":"NA"}
+    language_dict = {"en":"English","es":"Spanish","hu":"Hungarian","ru":"Russian","NA":"NA"}
 
     country_ip_dict = csv_data[0]
     total_edit_count = csv_data[1]
@@ -132,47 +132,80 @@ def combine_batching_data():
     combined_df.to_csv("../data/aggregate_csv_data/batching_data_total.csv", index=False, header=False)
     print(f"\tCombined {len(dataframes)} valid files into 'batching_data_total.csv'.")
 
-def show_menu():
+def show_menu(csv_files):
     os.system("clear")
-    options = [
-        "en-data_batching.csv",
-        "en-data_streaming.csv",
-        "fr-data_batching.csv",
-        "fr-data_streaming.csv",
-        "de-data_batching.csv",
-        "de-data_streaming.csv",
-        "es-data_batching.csv",
-        "es-data_streaming.csv",
-        "ja-data_batching.csv",
-        "ja-data_streaming.csv",
-        "pt-data_batching.csv",
-        "pt-data_streaming.csv",
-        "ru-data_batching.csv",
-        "ru-data_streaming.csv",
-        "View Speech Analysis Plot",
+
+    header = "=== Data Visualizer Menu ==="
+    print(make_text_green(header))
+    
+    # Printing CSV file options
+    csv_map = {}
+    for i, option in enumerate(csv_files): # Using enumerate to print/get index of options in incremental order
+        index = i+1
+        csv_map [index] = option
+        print(make_text_yellow(f"{index}. {csv_map[index]}"))
+    
+    # Printing Aggregate Data Options
+    aggregates = ["View Speech Analysis Plot"]
+
+    # Checking to see if aggregate files exist
+    if os.path.exists("../data/aggregate_csv_data/streaming_data_total.csv"):
+        aggregates.append("View streaming_data_total.csv")
+    if os.path.exists("../data/aggregate_csv_data/batching_data_total.csv"):
+        aggregates.append("View batching_data_total.csv")
+
+    # Printing aggregate options
+    aggregate_map = {}
+    for j, aggregate in enumerate(aggregates):
+        index = len(csv_files)+j+1
+        aggregate_map[index] = aggregate
+        print(make_text_blue(f"{index}. {aggregate_map[index]}"))
+
+    # Printing additional functions
+    additional_functions = [
         "Combine Streaming data",
         "Combine Batching data",
         "View streaming_data_total.csv",
-        "View batching_data_total.csv",
-        "Exit"
+        "View batching_data_total.csv"
     ]
-    print("\n=== DATA MENU ===")
-    for i, option in enumerate(options): # Using enumerate to print/get index of options in incremental order
-        if option == "Exit":
-            print(f"{0}. {option}")
-        elif option == "Combine Streaming data":
-            print(f"{90}. {option}")
-        elif option == "Combine Batching data":
-            print(f"{91}. {option}")
-        elif option == "View streaming_data_total.csv":
-            print(f"{92}. {option}")
-        elif option == "View batching_data_total.csv":
-            print(f"{93}. {option}")
-        elif option == "Exit":
-            print(f"{0}. {option}")
-        else:
-            print(f"\t{i+1}. {option}")
-    return input("\nSelect an option: ")
+    additional_function_map = {}
+    for i, function in enumerate(additional_functions):
+        index = i+90
+        additional_function_map[index] = function
+        print(make_text_pink(f"{index}. {additional_function_map[index]}"))
+
+    # Joinning all dictionaries
+    options_map = csv_map | aggregate_map | additional_function_map | {0: "Exit"}
+    print(make_text_red("\n0. Exit"))
+
+    selection = int(input("\nSelect an option: "))
+    
+
+    # For catching invalid inputs
+    if selection not in options_map.keys():
+        print("Invalid Entry",selection)
+        return -1, "Invalid", options_map
+    
+    print(selection, options_map[selection])
+    return selection, options_map[selection], options_map
+
+
+def make_text_blue(text):
+    return f"\033[94m{text}\033[0m"
+
+def make_text_red(text):
+    return f"\033[91m{text}\033[0m"
+
+def make_text_green(text):
+    return f"\033[92m{text}\033[0m"
+
+def make_text_pink(text):
+    return f"\033[95m{text}\033[0m"
+
+def make_text_yellow(text):
+    return f"\033[93m{text}\033[0m" 
+
+
 
 def display_data(language,collection_type):
     print(f"User Selected {language}-data_{collection_type}.csv")
@@ -180,91 +213,101 @@ def display_data(language,collection_type):
     plot_data(csv_data,language,collection_type)
 
 def run_interface():
-    menu_selection = show_menu()
-    user_input = int(menu_selection)
+    # Loading CSV Files
+    data_path = '../data/'
+    data = os.listdir(data_path)
+    csv_files = []
+    for file in data:
+        if file.endswith('.csv'):
+            print(file)
+            csv_files.append(file)
+    csv_files.sort() # Putting corresponding batching and streaming files together.
+
+    # Showing Menu and Getting User Input
+    index_selection, selection, options_map = show_menu(csv_files)
     selected_lang = "ALL"
+
+    # For Invalid Input
+    if index_selection == -1:
+        return
     
-    # Combining Data
-    if user_input == 90:
+    # For Exiting Program
+    if index_selection < 1:
+        print("Closing Interface")
+        os.kill(os.getpid(), signal.SIGINT)
+        return
+    
+    # Individual Datasets
+    if index_selection < len(options_map) - 7: # Removing aggregate and additional function options
+        selected_lang, collection_type = get_language_and_collection(selection)
+        display_data(selected_lang,collection_type)
+        return
+    
+    # Speech Plot
+    if index_selection == 9: # Speech Analysis Plot
+        analysis = SpeechAnalysis.SpeechAnalysis('V-Dem-CY-Full+Others-v15.csv')
+        analysis.make_plot()
+        return
+    
+    # Aggregate Datasets
+    if selection in options_map.values():
+        if selection == "View streaming_data_total.csv":
+            selected_lang = "NA"
+            collection_type = "streaming"
+            print("User Selected streaming_data_total.csv")
+            csv_data = read_csv('../data/aggregate_csv_data/streaming_data_total.csv')
+            plot_data(csv_data,selected_lang,collection_type)
+            return
+        elif selection == "View batching_data_total.csv":
+            selected_lang = "NA"
+            collection_type = "batching"
+            print("User Selected batching_data_total.csv")
+            csv_data = read_csv('../data/aggregate_csv_data/batching_data_total.csv')
+            plot_data(csv_data,selected_lang,collection_type)
+            return
+
+    # Combining Data Functions
+    if index_selection == 90:
         print("Combining streaming data...")
         combine_streaming_data()
         return
-    elif user_input == 91:
+    elif index_selection == 91:
         print("Combining batching data...")
         combine_batching_data()
         return
-    elif user_input == 92:
+    elif index_selection == 92:
         selected_lang = "NA"
         collection_type = "streaming"
         print("User Selected streaming_data_total.csv")
         csv_data = read_csv('../data/aggregate_csv_data/streaming_data_total.csv')
         plot_data(csv_data)
         return
-    elif user_input == 93:
+    elif index_selection == 93:
         selected_lang = "NA"
         collection_type = "batching"
         print("User Selected batching_data_total.csv")
         csv_data = read_csv('../data/aggregate_csv_data/batching_data_total.csv')
         plot_data(csv_data)
         return
-    elif user_input < 1:
-        print("Closing Interface")
-        os.kill(os.getpid(), signal.SIGINT)
+    elif index_selection == 93:
+        selected_lang = "NA"
+        collection_type = "batching"
+        print("User Selected batching_data_total.csv")
+        csv_data = read_csv('../data/aggregate_csv_data/batching_data_total.csv')
+        plot_data(csv_data)
         return
+
     
-    # For invalid inputs
-    if user_input > 15:
-        print("Invalid Entry",user_input)
-        return
     
-    # Individual Datasets
-    if user_input == 1: # English - Batching
-        selected_lang = "en"
-        collection_type = "batching"
-    elif user_input == 2: # English - Streaming
-        selected_lang = "en"
-        collection_type = "streaming"
-    elif user_input == 3: # French - Batching
-        selected_lang = "fr"
-        collection_type = "batching"
-    elif user_input == 4: # French - Streaming
-        selected_lang = "fr"
-        collection_type = "streaming"
-    elif user_input == 5: # German - Batching
-        selected_lang = "de"
-        collection_type = "batching"
-    elif user_input == 6: # German - Streaming
-        selected_lang = "de"
-        collection_type = "streaming"
-    elif user_input == 7: # Spanish - Batching
-        selected_lang = "es"
-        collection_type = "batching"
-    elif user_input == 8: # Spanish - Streaming
-        selected_lang = "es"
-        collection_type = "streaming"
-    elif user_input == 9: # Japanese - Batching
-        selected_lang = "ja"
-        collection_type = "batching"
-    elif user_input == 10: # Japanese - Streaming
-        selected_lang = "ja"
-        collection_type = "streaming"
-    elif user_input == 11: # Protuguese - Batching
-        selected_lang = "pt"
-        collection_type = "batching"
-    elif user_input == 12: # Protuguese - Streaming
-        selected_lang = "pt"
-        collection_type = "streaming"
-    elif user_input == 13: # Russian - Batching
-        selected_lang = "ru"
-        collection_type = "batching"
-    elif user_input == 14: # Russian - Streaming
-        selected_lang = "ru"
-        collection_type = "streaming"
-    elif user_input == 15: # Speech Analysis Plot
-        analysis = SpeechAnalysis.SpeechAnalysis('V-Dem-CY-Full+Others-v15.csv')
-        analysis.make_plot()
-        return
-    display_data(selected_lang,collection_type)
+    
+    
+
+
+def get_language_and_collection(file_name):
+    parts = file_name.split('-')
+    language = parts[0]
+    collection_type = parts[1].split('.')[0].replace('data_','')
+    return language, collection_type
 
 if __name__ == "__main__":
     try:
