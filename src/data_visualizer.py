@@ -39,6 +39,9 @@ def print_country_edit_counts(csv_data):
     for key, value in country_edit_count_dict.items():
         print(key,":",value)
 
+def rank_countries_by_speech_freedom(csv_data):
+    SpeechAnalysis.rank_countries_by_speech_freedom(csv_data)
+
 def plot_data(csv_data,selected_lang,collection_type):
     language_dict = {"en":"English","es":"Spanish","hu":"Hungarian","ru":"Russian","NA":"NA"}
 
@@ -165,6 +168,7 @@ def show_menu(csv_files):
     additional_functions = [
         "Combine Streaming data",
         "Combine Batching data",
+        "Rank Countries by Fredom of Speech Scores"
     ]
     additional_function_map = {}
     for i, function in enumerate(additional_functions):
@@ -210,16 +214,10 @@ def display_data(language,collection_type):
     csv_data = read_csv(f'../data/{language}-data_{collection_type}.csv')
     plot_data(csv_data,language,collection_type)
 
-def run_interface():
-    # Loading CSV Files
-    data_path = '../data/'
-    data = os.listdir(data_path)
-    csv_files = []
-    for file in data:
-        if file.endswith('.csv'):
-            print(file)
-            csv_files.append(file)
-    csv_files.sort() # Putting corresponding batching and streaming files together.
+def run_interface(analysis,csv_files):
+    
+
+    os.system("clear")
 
     # Showing Menu and Getting User Input
     index_selection, selection, options_map = show_menu(csv_files)
@@ -236,15 +234,14 @@ def run_interface():
         return
     
     # Individual Datasets
-    if index_selection < len(options_map) - 7: # Removing aggregate and additional function options
+    if index_selection < len(options_map) - 6: # Removing aggregate and additional function options
         selected_lang, collection_type = get_language_and_collection(selection)
         display_data(selected_lang,collection_type)
         return
     
     # Speech Plot
     if index_selection == 9: # Speech Analysis Plot
-        analysis = SpeechAnalysis.SpeechAnalysis('V-Dem-CY-Full+Others-v15.csv')
-        analysis.make_plot()
+        analysis.make_plot() # Fix this
         return
     
     # Aggregate Datasets
@@ -273,6 +270,15 @@ def run_interface():
         print("Combining batching data...")
         combine_batching_data()
         return
+    elif index_selection == 92:
+        os.system("clear")
+        analysis.rank_countries_by_speech_freedom()
+        exit_signal = input(make_text_blue("\n\nEnter 0 to exit: "))
+        while exit_signal != "0":
+            os.system("clear")
+            analysis.rank_countries_by_speech_freedom()
+            exit_signal = input(make_text_blue("\n\nEnter 0 to exit: "))
+        return
 
 
 
@@ -282,10 +288,22 @@ def get_language_and_collection(file_name):
     collection_type = parts[1].split('.')[0].replace('data_','')
     return language, collection_type
 
+
 if __name__ == "__main__":
     try:
+        print("Loading Data Visualizer Interface...")
+        analysis = SpeechAnalysis.SpeechAnalysis('V-Dem-CY-Full+Others-v15.csv')
+        # Loading CSV Files
+        data_path = '../data/'
+        data = os.listdir(data_path)
+        csv_files = []
+        for file in data:
+            if file.endswith('.csv'):
+                print(file)
+                csv_files.append(file)
+        csv_files.sort() # Putting corresponding batching and streaming files together.
         while True:
-            run_interface()
+            run_interface(analysis,csv_files)
     except KeyboardInterrupt:
         print("Program Stopped")
             

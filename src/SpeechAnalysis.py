@@ -44,6 +44,7 @@ class SpeechAnalysis:
         end_point_x = [0, dx] # From origin to x
         end_point_y = [0, dy] # From origin to y
         plt.plot(end_point_x, end_point_y, 'o-',label=f"{country_name} - Magnitude {float(country_data[1]):.3f}") # Label param is for legend
+    
 
     def make_plot(self):
         plt.figure(figsize=(8,6))
@@ -60,6 +61,19 @@ class SpeechAnalysis:
         plt.grid(True)
         plt.show()
 
+
+    def rank_countries_by_speech_freedom(self):
+        ranked_countries = self.get_country_data()
+        # Should be sorting in decending order based on magnitude r
+
+        ranked_countries.sort(key=lambda x: x[1], reverse=True) # x[1] is the magnitude r
+
+        print("\033[92m--- Countries ranked by Freedom of Speech Magnitude (Descending) ---\033[0m") # Its green text
+        i = 1
+        for country in ranked_countries:
+
+            print(f"{i}.) {country[0]} - Magnitude \033[94m{country[1]:.3f}\033[0m")
+            i += 1
 
 if __name__ == "__main__":
     analysis = SpeechAnalysis('V-Dem-CY-Full+Others-v15.csv')
