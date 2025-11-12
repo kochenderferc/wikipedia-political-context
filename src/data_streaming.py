@@ -5,13 +5,13 @@ from datetime import datetime
 import sys
 import time
 
-def make_text_red(text):
+def make_text_red(text) -> str:
     return f"\033[91m{text}\033[0m"
 
-def make_text_green(text):
+def make_text_green(text) -> str:
     return f"\033[92m{text}\033[0m"
 
-def make_csv(url,parameters,headers):
+def make_csv(url,parameters,headers) -> None:
     # Default dummy variable used to compare to new edits
     previous_timestamp = "2025-09-30T09:34:21Z"
     # Replace "Z" with "+00:00" so Python knows it's UTC

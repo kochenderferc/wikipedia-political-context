@@ -5,13 +5,13 @@ import sys
 import time
 from datetime import datetime
 
-def make_text_red(text):
+def make_text_red(text) -> str:
     return f"\033[91m{text}\033[0m"
 
-def make_text_green(text):
+def make_text_green(text) -> str:
     return f"\033[92m{text}\033[0m"
 
-def collect_data_from_json(json_data):
+def collect_data_from_json(json_data) -> tuple:
 
     # Opening database
     reader = geoip2.database.Reader("../GeoLite2-Country.mmdb") # Loading the database
@@ -55,12 +55,12 @@ def collect_data_from_json(json_data):
     return (ip_country_tuple_list,request_number,unregistered_count,registered_count)
 
 # Prints Response Data
-def print_score(unregistered_count,registered_count,request_number):
+def print_score(unregistered_count,registered_count,request_number) -> None:
     print(make_text_red(f"\tResgistered Accounts: {registered_count}"))
     print(make_text_green(f"\tUnregistered Accounts: {unregistered_count}"))
     print(f"\tTotal Requests Made: {request_number}")    
 
-def write_to_csv(lang_select,ip_country_tuples):
+def write_to_csv(lang_select,ip_country_tuples) -> None:
     print(len(ip_country_tuples)) # Printing out how many unregistered accounts there are in the dict
     
     row_number = 1
@@ -76,7 +76,7 @@ def write_to_csv(lang_select,ip_country_tuples):
     # Closing csv
     csvFile.close()
 
-def build_csv(url,parameters,headers,language):
+def build_csv(url,parameters,headers,language) -> None:
     
     response = requests.get(url, params=parameters, headers=headers) # Making request and storing data as json
     data = response.json()
@@ -89,8 +89,6 @@ def build_csv(url,parameters,headers,language):
     print_score(unregistered_count=unregistered_count,registered_count=registered_count,request_number=request_number)
     
     write_to_csv(language,ip_country)
-
-    
 
 if __name__ == "__main__":
     if len(sys.argv) == 2: 

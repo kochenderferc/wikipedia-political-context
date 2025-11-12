@@ -5,7 +5,7 @@ import math
 
 
 class SpeechAnalysis:
-    def __init__ (self,csv_file_path):
+    def __init__ (self,csv_file_path) -> None:
         # -- Processing To Get Country Speech and Expression Data --
 
         # load csv
@@ -21,7 +21,7 @@ class SpeechAnalysis:
         countries = ['United States', 'Canada', 'Germany', 'India', 'Brazil', 'China', 'Russia', 'South Africa', 'Japan', 'Australia']
         self.country_df = speech_df[speech_df['country_name'].isin(countries)]
 
-    def get_country_data(self):
+    def get_country_data(self) -> list:
         countries_list = []
         for i, row in self.country_df.iterrows():
             x = row['v2x_libdem']
@@ -32,21 +32,20 @@ class SpeechAnalysis:
             countries_list.append((row['country_name'], r, m))
         return countries_list
 
-    def compute_delta(self,country_data):
+    def compute_delta(self,country_data) -> tuple:
         country, r, m = country_data
         dx = r / math.sqrt(1 + m**2)
         dy = m * dx
         return (country, dx, dy)
 
-    def plot_data(self,country_data):
+    def plot_data(self,country_data) -> None:
         country_name, dx, dy = self.compute_delta(country_data)
         # Plotting Lines
         end_point_x = [0, dx] # From origin to x
         end_point_y = [0, dy] # From origin to y
         plt.plot(end_point_x, end_point_y, 'o-',label=f"{country_name} - Magnitude {float(country_data[1]):.3f}") # Label param is for legend
     
-
-    def make_plot(self):
+    def make_plot(self) -> None:
         plt.figure(figsize=(8,6))
         plt.scatter(self.country_df['v2x_libdem'], self.country_df['v2x_freexp_altinf'], s=50)
 
@@ -61,8 +60,7 @@ class SpeechAnalysis:
         plt.grid(True)
         plt.show()
 
-
-    def rank_countries_by_speech_freedom(self):
+    def rank_countries_by_speech_freedom(self) -> list:
         ranked_countries = self.get_country_data()
         # Should be sorting in decending order based on magnitude r
 
@@ -74,6 +72,7 @@ class SpeechAnalysis:
 
             print(f"{i}.) {country[0]} - Magnitude \033[94m{country[1]:.3f}\033[0m")
             i += 1
+        return ranked_countries
 
 if __name__ == "__main__":
     analysis = SpeechAnalysis('V-Dem-CY-Full+Others-v15.csv')
