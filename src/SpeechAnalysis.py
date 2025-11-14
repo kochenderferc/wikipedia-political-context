@@ -38,7 +38,7 @@ class SpeechAnalysis:
         dy = m * dx
         return (country, dx, dy)
 
-    def plot_data(self,country_data) -> None:
+    def plot_country(self,country_data) -> None:
         country_name, dx, dy = self.compute_delta(country_data)
         # Plotting Lines
         end_point_x = [0, dx] # From origin to x
@@ -50,7 +50,7 @@ class SpeechAnalysis:
         plt.scatter(self.country_df['v2x_libdem'], self.country_df['v2x_freexp_altinf'], s=50)
 
         for country_data in self.get_country_data():
-            self.plot_data(country_data)
+            self.plot_country(country_data)
         
         plt.axis('equal')
         plt.xlabel('Liberal Democracy Index (0-1)')

@@ -16,7 +16,6 @@ def collect_data_from_json(json_data) -> tuple:
     # Opening database
     reader = geoip2.database.Reader("../GeoLite2-Country.mmdb") # Loading the database
 
-
     ip_country_tuple_list = [] # Dictionary to hold IP and Country
     request_number = 0
     unregistered_count = 0
@@ -54,14 +53,14 @@ def collect_data_from_json(json_data) -> tuple:
     
     return (ip_country_tuple_list,request_number,unregistered_count,registered_count)
 
-# Prints Response Data
-def print_score(unregistered_count,registered_count,request_number) -> None:
+def print_edit_distribution(unregistered_count,registered_count,request_number) -> None:
     print(make_text_red(f"\tResgistered Accounts: {registered_count}"))
     print(make_text_green(f"\tUnregistered Accounts: {unregistered_count}"))
     print(f"\tTotal Requests Made: {request_number}")    
 
 def write_to_csv(lang_select,ip_country_tuples) -> None:
-    print(len(ip_country_tuples)) # Printing out how many unregistered accounts there are in the dict
+    # Printing out how many unregistered accounts there are in the dictionary
+    print(len(ip_country_tuples)) 
     
     row_number = 1
     with open(f"../data/{lang_select}-data_batching.csv",'w',newline="") as csvFile:
@@ -69,25 +68,23 @@ def write_to_csv(lang_select,ip_country_tuples) -> None:
         for pair in ip_country_tuples:
             ip = pair[0]
             country = pair[1]
-
             writer.writerow([ip,country])
             print("Writing",country,ip,row_number)
             row_number += 1
-    # Closing csv
     csvFile.close()
 
-def build_csv(url,parameters,headers,language) -> None:
-    
-    response = requests.get(url, params=parameters, headers=headers) # Making request and storing data as json
+def run_batching(url,parameters,headers,language) -> None:
+    # Making request and storing data as json
+    response = requests.get(url, params=parameters, headers=headers) 
     data = response.json()
     
-    # Collecting useful data from json
+    # Collecting data from json
     ip_country,request_number,unregistered_count,registered_count = collect_data_from_json(data)
 
-
     # Printing out data distribution
-    print_score(unregistered_count=unregistered_count,registered_count=registered_count,request_number=request_number)
+    print_edit_distribution(unregistered_count=unregistered_count,registered_count=registered_count,request_number=request_number)
     
+    # Making CSV
     write_to_csv(language,ip_country)
 
 if __name__ == "__main__":
@@ -107,7 +104,7 @@ if __name__ == "__main__":
             "format": "json"
         }
         
-        build_csv(url,parameters,headers,lang_select)
+        run_batching(url,parameters,headers,lang_select)
     else:
         print("Incorrect Arguments Provided\n Arguments Expected <program-name> <language-specification>\n Arguments given:")
         # Printing out the received arguments
