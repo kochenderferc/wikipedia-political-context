@@ -7,6 +7,7 @@ import signal
 import SpeechAnalysis
 import time 
 
+
 # Colors for console output
 def make_text_blue(text) -> str:
     return f"\033[94m{text}\033[0m"
@@ -20,6 +21,7 @@ def make_text_yellow(text) -> str:
     return f"\033[93m{text}\033[0m"
 
 
+# Helpers
 def read_csv(csv_file) -> tuple:
     try:
         country_edit_dict = {}
@@ -62,6 +64,29 @@ def prepare_plot_data(language,collection_type) -> tuple[tuple,str,str]:
         csv_data = read_csv(f'../data/aggregate_csv_data/{collection_type}_data_total.csv')
     return (csv_data,language,collection_type)
 
+def get_user_input(options_map) -> tuple[int, str, dict]:
+    user_input = input("\n Select Option: ")
+
+    # Weeding out non-integer inputs
+    try:
+        selection = int(user_input)
+    except:
+        print("Invalid Input, Please enter a number from the options list.")
+        time.sleep(2)
+        return -1, "Invalid", options_map
+    
+
+    # For catching invalid, numeric inputs
+    if selection not in options_map.keys():
+        print("Invalid Entry",selection)
+        time.sleep(2)
+        return -1, "Invalid", options_map
+    
+    print(selection, options_map[selection])
+    return (selection, options_map[selection], options_map)
+
+
+# Function Options
 def plot_data(data) -> None:
     # Unpacking Data
     csv_data = data[0]
@@ -99,8 +124,6 @@ def plot_data(data) -> None:
     plt.figtext(0.5, 0.01, f"Figure 1:  Count of edits made to {language_dict[selected_lang]} Wikipedia by country, N={total_edit_count}.", ha="center", fontsize=9, style="italic")
     plt.tight_layout()  # fitting labels
     plt.show()
-
-
 
 def combine_streaming_data() -> None:
     csv_files = glob.glob("../data/*-data_streaming.csv")
@@ -146,7 +169,6 @@ def combine_batching_data() -> None:
     combined_df.to_csv("../data/aggregate_csv_data/batching_data_total.csv", index=False, header=False)
     print(f"\tCombined {len(dataframes)} valid files into 'batching_data_total.csv'.")
 
-
 def rank_countries_by_speech_freedom(csv_data) -> None:
     SpeechAnalysis.rank_countries_by_speech_freedom(csv_data)
 
@@ -185,34 +207,18 @@ def show_menu(csv_files) -> dict:
 
     return options_map
 
-def get_user_input(options_map):
-    user_input = input("\n Select Option: ")
-
-    # Weeding out non-integer inputs
-    try:
-        selection = int(user_input)
-    except:
-        print("Invalid Input, Please enter a number from the options list.")
-        time.sleep(2)
-        return -1, "Invalid", options_map
-    
-
-    # For catching invalid, numeric inputs
-    if selection not in options_map.keys():
-        print("Invalid Entry",selection)
-        time.sleep(2)
-        return -1, "Invalid", options_map
-    
-    print(selection, options_map[selection])
-    return selection, options_map[selection], options_map
-
 def run_interface(analysis,csv_files) -> None:
 
+    language_dict = {"en":"English","es":"Spanish","hu":"Hungarian","ru":"Russian","NA":"Available"}
     os.system("clear")
 
     # Showing Menu and Getting User Input
     options = show_menu(csv_files)
-    index_selection, selection, options_map = get_user_input(options)
+    user_input = get_user_input(options)
+    index_selection = user_input[0]
+    selection = user_input[1]
+    options_map = user_input[2]
+
     selected_lang = "NA"
 
     # For Invalid Input
@@ -220,20 +226,20 @@ def run_interface(analysis,csv_files) -> None:
         return
     
     # For Exiting Program, 0.) Exit
-    if index_selection < 1:
+    if index_selection == 0:
         print("Closing Interface")
         os.kill(os.getpid(), signal.SIGINT)
         return
     
-    # Displaying Individual Datasets
-    if index_selection < len(options_map) - 6: # Removing aggregate and additional function options
+    # Displaying Individual Datasets, 1.) - 8.)
+    valid_options_count = len(language_dict)**2-2 # 2 CSVs per language, minus 2 for NA option
+    if index_selection < valid_options_count:
         selected_lang, collection_type = get_language_and_collection(selection)
         data = prepare_plot_data(selected_lang,collection_type)
         plot_data(data)
         return
     
-    
-    # Aggregate Datasets
+    # Additional Functions, 90.) - 93.)
     if selection in options_map.values():
         if selection == "View Speech Analysis Plot":
             analysis.make_plot()
@@ -263,6 +269,7 @@ def run_interface(analysis,csv_files) -> None:
                 exit_signal = input(make_text_blue("\n\nEnter 0 to exit: "))
                 if exit_signal == '0':
                     break
+                
             return
 
 

@@ -23,7 +23,7 @@ class SpeechAnalysis:
 
     def get_country_data(self) -> list:
         countries_list = []
-        for i, row in self.country_df.iterrows():
+        for _, row in self.country_df.iterrows():
             x = row['v2x_libdem']
             y = row['v2x_freexp_altinf']
             # Calculating Values
@@ -60,7 +60,7 @@ class SpeechAnalysis:
         plt.grid(True)
         plt.show()
 
-    def rank_countries_by_speech_freedom(self) -> list:
+    def rank_countries_by_speech_freedom(self) -> None:
         ranked_countries = self.get_country_data()
         # Should be sorting in decending order based on magnitude r
 
@@ -69,10 +69,9 @@ class SpeechAnalysis:
         print("\033[92m--- Countries ranked by Freedom of Speech Magnitude (Descending) ---\033[0m") # Its green text
         i = 1
         for country in ranked_countries:
-
             print(f"{i}.) {country[0]} - Magnitude \033[94m{country[1]:.3f}\033[0m")
             i += 1
-        return ranked_countries
+        
 
 if __name__ == "__main__":
     analysis = SpeechAnalysis('V-Dem-CY-Full+Others-v15.csv')
