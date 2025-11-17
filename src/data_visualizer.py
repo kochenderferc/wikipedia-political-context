@@ -83,7 +83,7 @@ def get_user_input(options_map) -> tuple[int, str, dict]:
         return -1, "Invalid", options_map
     
     print(selection, options_map[selection])
-    return (selection, options_map[selection], options_map)
+    return selection, options_map[selection], options_map
 
 
 # Function Options
@@ -173,6 +173,7 @@ def rank_countries_by_speech_freedom(csv_data) -> None:
     SpeechAnalysis.rank_countries_by_speech_freedom(csv_data)
 
 
+# Interface
 def show_menu(csv_files) -> dict:
     os.system("clear")
 
@@ -207,70 +208,77 @@ def show_menu(csv_files) -> dict:
 
     return options_map
 
+def exit_interface() -> None:
+    print("Closing Interface")
+    os.kill(os.getpid(), signal.SIGINT)
+
+def handle_individual_dataset(selection) -> None:
+    selected_lang, collection_type = get_language_and_collection(selection)
+    data = prepare_plot_data(selected_lang,collection_type)
+    plot_data(data)
+
+def handle_additional_function(selection,analysis) -> None:
+    if selection == "View Speech Analysis Plot":
+            analysis.make_plot()
+            return
+    elif selection == "View Combined Streaming Data":
+        combine_batching_data()
+        # Setting parameters
+        selected_lang = "NA"
+        collection_type = "streaming"
+        print("User Selected streaming_data_total.csv")
+        data = prepare_plot_data(selected_lang,collection_type)
+        plot_data(data)
+        return
+    elif selection == "View Combined Batching Data":
+        combine_streaming_data()
+        selected_lang = "NA"
+        collection_type = "batching"
+        print("User Selected batching_data_total.csv")
+        data = prepare_plot_data(selected_lang,collection_type)
+        plot_data(data)
+        return
+    elif selection == "Rank Countries by Fredom of Speech Scores":
+        # Console Output Loop
+        while True:
+            os.system("clear")
+            analysis.rank_countries_by_speech_freedom()
+            exit_signal = input(make_text_blue("\n\nEnter 0 to exit: "))
+            if exit_signal == '0':
+                break
+        return
+    
 def run_interface(analysis,csv_files) -> None:
 
     language_dict = {"en":"English","es":"Spanish","hu":"Hungarian","ru":"Russian","NA":"Available"}
     os.system("clear")
 
-    # Showing Menu and Getting User Input
+    # Showing Menu 
     options = show_menu(csv_files)
-    user_input = get_user_input(options)
-    index_selection = user_input[0]
-    selection = user_input[1]
-    options_map = user_input[2]
 
-    selected_lang = "NA"
+    # Getting User Input
+    index_selection, selection, options_map  = get_user_input(options)
 
+    # ===== Handling User Selection =====
+        # Create function handler/assigner
     # For Invalid Input
     if index_selection == -1:
         return
     
     # For Exiting Program, 0.) Exit
     if index_selection == 0:
-        print("Closing Interface")
-        os.kill(os.getpid(), signal.SIGINT)
+        exit_interface()
         return
     
-    # Displaying Individual Datasets, 1.) - 8.)
+    # Displaying Individual Datasets, 1 - 8
     valid_options_count = len(language_dict)**2-2 # 2 CSVs per language, minus 2 for NA option
     if index_selection < valid_options_count:
-        selected_lang, collection_type = get_language_and_collection(selection)
-        data = prepare_plot_data(selected_lang,collection_type)
-        plot_data(data)
+        handle_individual_dataset(selection)
         return
     
     # Additional Functions, 90.) - 93.)
     if selection in options_map.values():
-        if selection == "View Speech Analysis Plot":
-            analysis.make_plot()
-            return
-        elif selection == "View Combined Streaming Data":
-            combine_batching_data()
-            # Setting parameters
-            selected_lang = "NA"
-            collection_type = "streaming"
-            print("User Selected streaming_data_total.csv")
-            data = prepare_plot_data(selected_lang,collection_type)
-            plot_data(data)
-            return
-        elif selection == "View Combined Batching Data":
-            combine_streaming_data()
-            selected_lang = "NA"
-            collection_type = "batching"
-            print("User Selected batching_data_total.csv")
-            data = prepare_plot_data(selected_lang,collection_type)
-            plot_data(data)
-            return
-        elif selection == "Rank Countries by Fredom of Speech Scores":
-            # Console Output Loop
-            while True:
-                os.system("clear")
-                analysis.rank_countries_by_speech_freedom()
-                exit_signal = input(make_text_blue("\n\nEnter 0 to exit: "))
-                if exit_signal == '0':
-                    break
-                
-            return
+        handle_additional_function(selection,analysis)
 
 
 if __name__ == "__main__":
