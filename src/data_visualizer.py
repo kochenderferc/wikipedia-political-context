@@ -9,6 +9,8 @@ import time
 from collections import defaultdict
 import numpy as np
 
+import requests
+
 
 
 # Colors for console output
@@ -153,8 +155,22 @@ def plot_edits_and_speech(analysis):
 
     plt.show()
 
+def get_country_populations():
 
-
+    countries = get_edit_count_of_all_countries()
+    country_pop_dict = {}
+    """
+    Russia [{'population': 146028325}]
+    Belarus [{'population': 9109280}]
+    """
+    for country, edit in countries.items():
+        data = requests.get(f"https://restcountries.com/v3.1/name/{country}?fullText=true&fields=population").json()
+        population = data[0]["population"]
+        country_pop_dict[country] = population
+        print(country,country_pop_dict[country])
+    
+    return country_pop_dict
+    
 
 
 # Function Options
@@ -360,6 +376,10 @@ def run_interface(analysis,csv_files) -> None:
 
 if __name__ == "__main__":
     try:
+
+        get_country_populations()
+        time.sleep(10)
+
         os.system("clear")
         
         # Loading Speech Analysis

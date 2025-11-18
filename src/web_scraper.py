@@ -3,6 +3,7 @@ import time
 import os
 import glob
 import pandas as pd
+
 testing_languages=[
     'sq',  # Albanian
     'az',  # Azerbaijani
@@ -25,7 +26,6 @@ testing_languages=[
     'eu',  # Basque
     'af',  # Afrikaans
 ]
-
 
 languages_that_work = [
     'en', # English
