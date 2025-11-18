@@ -6,6 +6,9 @@ import os
 import signal
 import SpeechAnalysis
 import time 
+from collections import defaultdict
+import numpy as np
+
 
 
 # Colors for console output
@@ -84,6 +87,74 @@ def get_user_input(options_map) -> tuple[int, str, dict]:
     
     print(selection, options_map[selection])
     return selection, options_map[selection], options_map
+
+def get_country_edit_counts(csv_path):
+    counts = defaultdict(int)
+
+    with open(csv_path, "r", newline='', encoding="utf-8") as file:
+        reader = csv.reader(file)
+        next(reader, None)  # if there *is* a header; remove this if NO header at all
+
+        for row in reader:
+            # Country is always the second item in the row
+            if len(row) > 1:
+                country = row[1]
+                counts[country] += 1
+
+    return counts
+
+def get_edit_count_of_all_countries():
+    csv_paths = glob.glob("../data/*-data_streaming.csv")
+    total_counts = defaultdict(int)
+
+    for path in csv_paths:
+        per_file_counts = get_country_edit_counts(path)
+
+        for country, count in per_file_counts.items():
+            total_counts[country] += count
+
+    return dict(total_counts)
+
+def plot_edits_and_speech(analysis):
+    # ranked_countries -> [(country, magnitude, angle), ...]
+    ranked_countries = analysis.sort_countries_by_speech()
+
+    # Convert magnitude list into dictionary for lookup
+    ranked_dict = {country: magnitude for (country, magnitude, angle) in ranked_countries}
+
+    # Get edit counts
+    country_edits = get_edit_count_of_all_countries()
+    country_edits["United States of America"] = country_edits["United States"] # Exception, have to mannually change United States to United States of America
+
+    # Only plot countries that appear in BOTH datasets
+    common_countries = [c for c in country_edits if c in ranked_dict]
+    
+
+    # Extract values aligned by country
+    edits = [country_edits[c] for c in common_countries]
+    magnitudes = [ranked_dict[c] for c in common_countries]
+
+    # Create x positions for countries
+    x = np.arange(len(common_countries))
+    width = 0.35   # bar width
+
+    plt.figure(figsize=(14, 7))
+
+    # Bars
+    plt.bar(x - width/2, edits, width, label="Edits")
+    plt.bar(x + width/2, magnitudes, width, label="Freedom Of Speech")
+
+    # Labels & formatting
+    plt.xticks(x, common_countries, rotation=90)
+    plt.ylabel("Value")
+    plt.title("Edits and Speech Magnitude per Country")
+    plt.legend()
+    plt.tight_layout()
+
+    plt.show()
+
+
+
 
 
 # Function Options
@@ -173,6 +244,7 @@ def rank_countries_by_speech_freedom(csv_data) -> None:
     SpeechAnalysis.rank_countries_by_speech_freedom(csv_data)
 
 
+
 # Interface
 def show_menu(csv_files) -> dict:
     os.system("clear")
@@ -195,6 +267,7 @@ def show_menu(csv_files) -> dict:
         91:"View Combined Streaming Data",
         92:"View Combined Batching Data",
         93:"Rank Countries by Fredom of Speech Scores",
+        94:"Plot Edits and Speech",
         0: "Exit"
     }
     for index, function in additional_functions_map.items():
@@ -270,6 +343,10 @@ def run_interface(analysis,csv_files) -> None:
         exit_interface()
         return
     
+    if index_selection == 94:
+        plot_edits_and_speech(analysis)
+        return
+
     # Displaying Individual Datasets, 1 - 8
     valid_options_count = len(language_dict)**2-2 # 2 CSVs per language, minus 2 for NA option
     if index_selection < valid_options_count:

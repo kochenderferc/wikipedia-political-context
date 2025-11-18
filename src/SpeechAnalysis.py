@@ -2,7 +2,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import math
-
+import time
 
 class SpeechAnalysis:
     def __init__ (self,csv_file_path) -> None:
@@ -18,7 +18,22 @@ class SpeechAnalysis:
         speech_df = year_df[['country_name', 'country_text_id', 'v2x_freexp_altinf', 'v2x_libdem']].dropna()
 
         # Filter for specific countries
-        countries = ['United States', 'Canada', 'Germany', 'India', 'Brazil', 'China', 'Russia', 'South Africa', 'Japan', 'Australia']
+        countries = [ 
+            'Argentina', 'Australia', 'Austria', 'Bangladesh', 'Brazil',
+            'Bulgaria', 'Cabo Verde', 'Canada', 'Chile', 'China',
+            'Colombia', 'Croatia', 'Czechia', 'Denmark', 'DR Congo',
+            'Ecuador', 'Egypt', 'France', 'Germany', 'Greece',
+            'Hong Kong', 'Hungary', 'India', 'Indonesia', 'Iran',
+            'Ireland', 'Israel', 'Italy', 'Japan', 'Malaysia',
+            'Mauritius', 'Mexico', 'Mongolia', 'Morocco', 'Myanmar',
+            'Netherlands', 'New Zealand', 'Nigeria', 'Pakistan', 'Panama',
+            'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal',
+            'Puerto Rico', 'Russia', 'Seychelles', 'Singapore', 'South Africa',
+            'South Korea', 'Spain', 'Sweden', 'Thailand', 'The Netherlands',
+            'Ukraine', 'United Kingdom', 'United States of America', 'Uruguay', 'Venezuela',
+            'Vietnam'
+        ]
+
         self.country_df = speech_df[speech_df['country_name'].isin(countries)]
 
     def get_country_data(self) -> list:
@@ -60,17 +75,24 @@ class SpeechAnalysis:
         plt.grid(True)
         plt.show()
 
-    def rank_countries_by_speech_freedom(self) -> None:
+    def sort_countries_by_speech(self) -> list:
         ranked_countries = self.get_country_data()
-        # Should be sorting in decending order based on magnitude r
 
+        # Should be sorting in decending order based on magnitude r
         ranked_countries.sort(key=lambda x: x[1], reverse=True) # x[1] is the magnitude r
+
+        return ranked_countries
+    
+    def rank_countries_by_speech_freedom(self) -> list:
+        
+        ranked_countries = self.sort_countries_by_speech()
 
         print("\033[92m--- Countries ranked by Freedom of Speech Magnitude (Descending) ---\033[0m") # Its green text
         i = 1
         for country in ranked_countries:
             print(f"{i}.) {country[0]} - Magnitude \033[94m{country[1]:.3f}\033[0m")
             i += 1
+        
         
 
 if __name__ == "__main__":
