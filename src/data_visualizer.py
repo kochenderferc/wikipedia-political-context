@@ -117,47 +117,11 @@ def get_edit_count_of_all_countries():
 
     return dict(total_counts)
 
-def plot_edits_and_speech(analysis):
-    # ranked_countries -> [(country, magnitude, angle), ...]
-    ranked_countries = analysis.sort_countries_by_speech()
-
-    # Convert magnitude list into dictionary for lookup
-    ranked_dict = {country: magnitude for (country, magnitude, angle) in ranked_countries}
-
-    # Get edit counts
-    country_edits = get_edit_count_of_all_countries()
-    country_edits["United States of America"] = country_edits["United States"] # Exception, have to mannually change United States to United States of America
-
-    # Only plot countries that appear in BOTH datasets
-    common_countries = [c for c in country_edits if c in ranked_dict]
-    
-
-    # Extract values aligned by country
-    edits = [country_edits[c] for c in common_countries]
-    magnitudes = [ranked_dict[c] for c in common_countries]
-
-    # Create x positions for countries
-    x = np.arange(len(common_countries))
-    width = 0.35   # bar width
-
-    plt.figure(figsize=(14, 7))
-
-    # Bars
-    plt.bar(x - width/2, edits, width, label="Edits")
-    plt.bar(x + width/2, magnitudes, width, label="Freedom Of Speech")
-
-    # Labels & formatting
-    plt.xticks(x, common_countries, rotation=90)
-    plt.ylabel("Value")
-    plt.title("Edits and Speech Magnitude per Country")
-    plt.legend()
-    plt.tight_layout()
-
-    plt.show()
-
-def get_country_populations():
-
+def get_country_populations() -> dict[str,int]:
+   
+    # Using this method just to get a list of countries
     countries = get_edit_count_of_all_countries()
+    countries["United States of America"] = countries["United States"] # Have to mannually change United States -> United States of America
     country_pop_dict = {}
     """
     Russia [{'population': 146028325}]
@@ -165,13 +129,21 @@ def get_country_populations():
     """
     for country, edit in countries.items():
         data = requests.get(f"https://restcountries.com/v3.1/name/{country}?fullText=true&fields=population").json()
-        population = data[0]["population"]
-        country_pop_dict[country] = population
-        print(country,country_pop_dict[country])
-    
+        try:
+            population = data[0]["population"]
+            country_pop_dict[country] = population
+            print(country,country_pop_dict[country])
+        except:
+            print(country,data)
+
+
+    # Adjusting population sizes by a factor of 1000, we want ot plot edit counts of each country per 1000 people in the population.
+    for country, population in country_pop_dict.items():
+        # Getting how many sets of 1000 people are in a population. 42,521 // 1000 = 42
+        country_pop_dict[country] = population // 1000
+
     return country_pop_dict
     
-
 
 # Function Options
 def plot_data(data) -> None:
@@ -259,6 +231,54 @@ def combine_batching_data() -> None:
 def rank_countries_by_speech_freedom(csv_data) -> None:
     SpeechAnalysis.rank_countries_by_speech_freedom(csv_data)
 
+def plot_edits_and_speech(analysis):
+    # {country : population}, population has been adjusted by a factor of 1,000
+    population_dict = get_country_populations()
+
+    # ranked_countries -> [(country, magnitude, angle), ...]
+    ranked_countries = analysis.sort_countries_by_speech()
+
+    # Convert magnitude list into dictionary for lookup
+    ranked_dict = {country: magnitude for (country, magnitude, angle) in ranked_countries}
+
+    # Get edit counts
+    country_edits = get_edit_count_of_all_countries()
+    country_edits["United States of America"] = country_edits["United States"] # Exception, have to mannually change United States to United States of America
+
+    # Only plot countries that appear in BOTH datasets
+    common_countries = [c for c in country_edits if c in ranked_dict]
+    
+
+    # Extract values aligned by country and adjust them by population size
+    edits = []
+    for country in common_countries:
+        edit_count = country_edits[country]
+        adjusted_edit_count = edit_count  # / population_dict[country] need more data before we do this
+        edits.append(adjusted_edit_count)
+
+    magnitudes = []
+    for country in common_countries:
+        magnitudes.append(ranked_dict[country])
+
+
+    # Create x positions for countries
+    x = np.arange(len(common_countries))
+    width = 0.35   # bar width
+
+    plt.figure(figsize=(14, 7))
+
+    # Bars
+    plt.bar(x - width/2, edits, width, label="Edits")
+    plt.bar(x + width/2, magnitudes, width, label="Freedom Of Speech")
+
+    # Labels & formatting
+    plt.xticks(x, common_countries, rotation=90)
+    plt.ylabel("Value")
+    plt.title("Edits and Speech Magnitude per Country")
+    plt.legend()
+    plt.tight_layout()
+
+    plt.show()
 
 
 # Interface
@@ -376,9 +396,6 @@ def run_interface(analysis,csv_files) -> None:
 
 if __name__ == "__main__":
     try:
-
-        get_country_populations()
-        time.sleep(10)
 
         os.system("clear")
         
