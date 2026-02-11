@@ -2,7 +2,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import math
-import time
+
 
 class SpeechAnalysis:
     def __init__ (self,csv_file_path) -> None:
@@ -83,7 +83,7 @@ class SpeechAnalysis:
 
         return ranked_countries
     
-    def rank_countries_by_speech_freedom(self) -> list:
+    def rank_countries_by_speech_freedom(self) -> None:
         
         ranked_countries = self.sort_countries_by_speech()
 

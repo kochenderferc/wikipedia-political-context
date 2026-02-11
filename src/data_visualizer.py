@@ -228,8 +228,7 @@ def combine_batching_data() -> None:
     combined_df.to_csv("../data/aggregate_csv_data/batching_data_total.csv", index=False, header=False)
     print(f"\tCombined {len(dataframes)} valid files into 'batching_data_total.csv'.")
 
-def rank_countries_by_speech_freedom(csv_data) -> None:
-    SpeechAnalysis.rank_countries_by_speech_freedom(csv_data)
+
 
 def plot_edits_and_speech(analysis):
     # {country : population}, population has been adjusted by a factor of 1,000
@@ -253,7 +252,7 @@ def plot_edits_and_speech(analysis):
     edits = []
     for country in common_countries:
         edit_count = country_edits[country]
-        adjusted_edit_count = edit_count  # / population_dict[country] need more data before we do this
+        adjusted_edit_count = edit_count  # / population_dict[country] need more data before we do this REMINDER REMINDER LOOK HERE LAST WORKED SPOT 
         edits.append(adjusted_edit_count)
 
     magnitudes = []
